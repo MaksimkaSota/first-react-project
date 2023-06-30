@@ -8,7 +8,7 @@ import { News } from './conponents/News/News';
 import { Settings } from './conponents/Settings/Settings';
 import { Musics } from './conponents/Musics/Musics';
 
-export const App = ({state, addPostInState, setPostInState}) => {
+export const App = ({state, dispatch}) => {
   return (
     <div className="app-wrapper">
       <Header />
@@ -16,7 +16,7 @@ export const App = ({state, addPostInState, setPostInState}) => {
       <div className="app-wrapper-content">
         <Routes>
           <Route path="/dialogs/*" element={<Dialogs dialogsState={state.dialogsPage} />} />
-          <Route path="/profile" element={<Profile profileState={state.profilePage} addPostInState={addPostInState} setPostInState={setPostInState} />} />
+          <Route path="/profile" element={<Profile profileState={state.profilePage} dispatch={dispatch} />} />
           <Route path="/news" element={<News />} />
           <Route path="/musics" element={<Musics />} />
           <Route path="/settings" element={<Settings />} />

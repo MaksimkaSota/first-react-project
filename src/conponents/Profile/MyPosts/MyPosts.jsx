@@ -2,19 +2,20 @@ import { useRef } from 'react';
 import classes from './MyPosts.module.css';
 import { Post } from './Post/Post';
 
-export const MyPosts = ({posts, postText, addPostInState, setPostInState}) => {
+export const MyPosts = ({posts, postText, dispatch}) => {
   const postsElements = posts
     .map((post, index) => <Post message={post.message} numberOfLike={post.numberOfLike} key={index} />)
 
   const newPostElement = useRef(null);
 
   const addPost = () => {
-    addPostInState();
+    dispatch({type: 'ADD-POST-IN-STATE'});
   };
 
   const setPost = () => {
-    let text = newPostElement.current.value;
-    setPostInState(text);
+    const text = newPostElement.current.value;
+    const action = {type: 'SET-POST-IN-STATE', newText: text};
+    dispatch(action);
   }
 
   return (

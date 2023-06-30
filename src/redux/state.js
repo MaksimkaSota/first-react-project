@@ -30,25 +30,49 @@ export const store = {
   _callSubscriber() {
     console.log('State changed');
   },
+
   getState() {
     return this._state;
   },
-  addPostInState() {
-    const newPost = {
-      id: 5,
-      message: this._state.profilePage.postText,
-      numberOfLike: 0
-    };
-    this._state.profilePage.posts.push(newPost);
-    this._state.profilePage.postText = '';
-    this._callSubscriber(this._state);
-  },
-  setPostInState(newText) {
-    this._state.profilePage.postText = newText;
-    this._callSubscriber(this._state);
-  },
   subscribe(observer) {
     this._callSubscriber = observer;
+  },
+
+  // _addPostInState() {
+  //   const newPost = {
+  //     id: 5,
+  //     message: this._state.profilePage.postText,
+  //     numberOfLike: 0
+  //   };
+  //   this._state.profilePage.posts.push(newPost);
+  //   this._state.profilePage.postText = '';
+  //   this._callSubscriber(this._state);
+  // },
+  // _setPostInState(newText) {
+  //   this._state.profilePage.postText = newText;
+  //   this._callSubscriber(this._state);
+  // },
+
+  dispatch(action) {
+    switch (action.type) {
+      case 'ADD-POST-IN-STATE':
+        const newPost = {
+          id: 5,
+          message: this._state.profilePage.postText,
+          numberOfLike: 0
+        };
+        this._state.profilePage.posts.push(newPost);
+        this._state.profilePage.postText = '';
+        this._callSubscriber(this._state);
+        break;
+      case 'SET-POST-IN-STATE': {
+        this._state.profilePage.postText = action.newText;
+        this._callSubscriber(this._state);
+        break;
+      }
+      default:
+        break;
+    }
   }
 }
 
