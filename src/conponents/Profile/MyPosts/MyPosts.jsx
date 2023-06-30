@@ -15,7 +15,7 @@ export const MyPosts = ({posts, postText, dispatch}) => {
 
   const setPost = () => {
     const text = newPostElement.current.value;
-    const action = setPostActionCreator(text)
+    const action = setPostActionCreator(text);
     dispatch(action);
   }
 

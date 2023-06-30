@@ -1,6 +1,9 @@
 const ADD_POST_IN_STATE = 'ADD-POST-IN-STATE';
 const SET_POST_IN_STATE = 'SET-POST-IN-STATE';
 
+const ADD_MESSAGE_IN_STATE = 'ADD-MESSAGE-IN-STATE';
+const SET_MESSAGE_IN_STATE = 'SET-MESSAGE-IN-STATE';
+
 export const store = {
   _state: {
     profilePage: {
@@ -27,7 +30,8 @@ export const store = {
         {id: 3, message: 'Yo'},
         {id: 4, message: 'Yo'},
         {id: 5, message: 'Yo'},
-      ]
+      ],
+      messageText: 'I\'m default message text'
     }
   },
   _callSubscriber() {
@@ -73,6 +77,21 @@ export const store = {
         this._callSubscriber(this._state);
         break;
       }
+      case ADD_MESSAGE_IN_STATE: {
+        const newMessage = {
+          id: 6,
+          message: this._state.dialogsPage.messageText
+        };
+        this._state.dialogsPage.messages.push(newMessage);
+        this._state.dialogsPage.messageText = '';
+        this._callSubscriber(this._state);
+        break;
+      }
+      case SET_MESSAGE_IN_STATE: {
+        this._state.dialogsPage.messageText = action.newText;
+        this._callSubscriber(this._state);
+        break;
+      }
       default:
         break;
     }
@@ -82,6 +101,11 @@ export const store = {
 export const addPostActionCreator = () => ({type: ADD_POST_IN_STATE});
 export const setPostActionCreator = (text) => ({
   type: SET_POST_IN_STATE,
+  newText: text
+});
+export const addMessageActionCreator = () => ({type: ADD_MESSAGE_IN_STATE});
+export const setMessageActionCreator = (text) => ({
+  type: SET_MESSAGE_IN_STATE,
   newText: text
 });
 
