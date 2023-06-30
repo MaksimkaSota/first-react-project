@@ -1,8 +1,7 @@
 import { MyPosts } from './MyPosts/MyPosts';
 import { ProfileInfo } from './ProfileInfo/ProfileInfo';
-import { setPostInState } from '../../redux/state';
 
-export const Profile = ({profileState, addPostInState}) => {
+export const Profile = ({profileState, addPostInState, setPostInState}) => {
   return (
     <div>
       <ProfileInfo />
