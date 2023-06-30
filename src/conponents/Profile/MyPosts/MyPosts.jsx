@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import classes from './MyPosts.module.css';
 import { Post } from './Post/Post';
-import { addPostActionCreator, setPostActionCreator } from '../../../redux/state';
+import { addPostActionCreator, setPostActionCreator } from '../../../redux/profile-reducer';
 
 export const MyPosts = ({posts, postText, dispatch}) => {
   const postsElements = posts

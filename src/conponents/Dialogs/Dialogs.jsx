@@ -1,7 +1,7 @@
 import classes from './Dialogs.module.css';
 import { Dialog } from './Dialog/Dialog';
 import { Message } from './Message/Message';
-import { addMessageActionCreator, setMessageActionCreator } from '../../redux/state';
+import { addMessageActionCreator, setMessageActionCreator } from '../../redux/dialogs-reducer';
 
 export const Dialogs = ({dialogsState, dispatch}) => {
   const dialogsElements = dialogsState.dialogs
