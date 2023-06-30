@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import classes from './MyPosts.module.css';
 import { Post } from './Post/Post';
+import { addPostActionCreator, setPostActionCreator } from '../../../redux/state';
 
 export const MyPosts = ({posts, postText, dispatch}) => {
   const postsElements = posts
@@ -9,12 +10,12 @@ export const MyPosts = ({posts, postText, dispatch}) => {
   const newPostElement = useRef(null);
 
   const addPost = () => {
-    dispatch({type: 'ADD-POST-IN-STATE'});
+    dispatch(addPostActionCreator());
   };
 
   const setPost = () => {
     const text = newPostElement.current.value;
-    const action = {type: 'SET-POST-IN-STATE', newText: text};
+    const action = setPostActionCreator(text)
     dispatch(action);
   }
 

@@ -1,3 +1,6 @@
+const ADD_POST_IN_STATE = 'ADD-POST-IN-STATE';
+const SET_POST_IN_STATE = 'SET-POST-IN-STATE';
+
 export const store = {
   _state: {
     profilePage: {
@@ -55,7 +58,7 @@ export const store = {
 
   dispatch(action) {
     switch (action.type) {
-      case 'ADD-POST-IN-STATE':
+      case ADD_POST_IN_STATE:
         const newPost = {
           id: 5,
           message: this._state.profilePage.postText,
@@ -65,7 +68,7 @@ export const store = {
         this._state.profilePage.postText = '';
         this._callSubscriber(this._state);
         break;
-      case 'SET-POST-IN-STATE': {
+      case SET_POST_IN_STATE: {
         this._state.profilePage.postText = action.newText;
         this._callSubscriber(this._state);
         break;
@@ -75,5 +78,11 @@ export const store = {
     }
   }
 }
+
+export const addPostActionCreator = () => ({type: ADD_POST_IN_STATE});
+export const setPostActionCreator = (text) => ({
+  type: SET_POST_IN_STATE,
+  newText: text
+});
 
 window.store = store;
