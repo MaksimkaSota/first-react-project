@@ -8,15 +8,15 @@ import { Settings } from './conponents/Settings/Settings';
 import { Musics } from './conponents/Musics/Musics';
 import { DialogsContainer } from './conponents/Dialogs/DialogsContainer';
 
-export const App = ({store}) => {
+export const App = () => {
   return (
     <div className="app-wrapper">
       <Header />
       <Navbar />
       <div className="app-wrapper-content">
         <Routes>
-          <Route path="/dialogs/*" element={<DialogsContainer store={store} />} />
-          <Route path="/profile" element={<Profile store={store} />} />
+          <Route path="/dialogs/*" element={<DialogsContainer />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/news" element={<News />} />
           <Route path="/musics" element={<Musics />} />
           <Route path="/settings" element={<Settings />} />

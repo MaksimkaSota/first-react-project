@@ -5,15 +5,18 @@ import reportWebVitals from './reportWebVitals';
 import { store } from './redux/redux-store';
 import { BrowserRouter } from 'react-router-dom';
 import { App } from './App';
+import { Provider } from './StoreContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const rerenderEntireTree = () => {
   root.render(
     <React.StrictMode>
-      <BrowserRouter>
-        <App store={store} />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
     </React.StrictMode>
   );
 }

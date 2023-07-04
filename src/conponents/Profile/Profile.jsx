@@ -1,11 +1,11 @@
 import { ProfileInfo } from './ProfileInfo/ProfileInfo';
 import { MyPostsContainer } from './MyPosts/MyPostsContainer';
 
-export const Profile = ({store}) => {
+export const Profile = () => {
   return (
     <div>
       <ProfileInfo />
-      <MyPostsContainer store={store} />
+      <MyPostsContainer />
     </div>
   );
 };
