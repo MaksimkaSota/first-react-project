@@ -1,11 +1,11 @@
-import { MyPosts } from './MyPosts/MyPosts';
 import { ProfileInfo } from './ProfileInfo/ProfileInfo';
+import { MyPostsContainer } from './MyPosts/MyPostsContainer';
 
-export const Profile = ({profileState, dispatch}) => {
+export const Profile = ({store}) => {
   return (
     <div>
       <ProfileInfo />
-      <MyPosts posts={profileState.posts} postText={profileState.postText} dispatch={dispatch} />
+      <MyPostsContainer store={store} />
     </div>
   );
 };

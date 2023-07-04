@@ -1,22 +1,19 @@
 import { useRef } from 'react';
 import classes from './MyPosts.module.css';
 import { Post } from './Post/Post';
-import { addPostActionCreator, setPostActionCreator } from '../../../redux/profile-reducer';
 
-export const MyPosts = ({posts, postText, dispatch}) => {
-  const postsElements = posts
-    .map((post, index) => <Post message={post.message} numberOfLike={post.numberOfLike} key={index} />)
+export const MyPosts = ({profileState, addPost, setPost}) => {
+  const postsElements = profileState.posts
+    .map((post, index) => <Post message={post.message} numberOfLike={post.numberOfLike} key={index} />);
+  const postText = profileState.postText;
 
-  const newPostElement = useRef(null);
-
-  const addPost = () => {
-    dispatch(addPostActionCreator());
+  const onAddPost = () => {
+    addPost();
   };
 
-  const setPost = () => {
-    const text = newPostElement.current.value;
-    const action = setPostActionCreator(text);
-    dispatch(action);
+  const onSetPost = (event) => {
+    const text = event.target.value;
+    setPost(text);
   }
 
   return (
@@ -24,10 +21,10 @@ export const MyPosts = ({posts, postText, dispatch}) => {
       <h3>My posts</h3>
       <div>
         <div>
-          <textarea onChange={setPost} ref={newPostElement} value={postText} />
+          <textarea onChange={onSetPost} value={postText} />
         </div>
         <div>
-          <button onClick={addPost}>Add post</button>
+          <button onClick={onAddPost}>Add post</button>
         </div>
       </div>
       <div className={classes.posts}>
