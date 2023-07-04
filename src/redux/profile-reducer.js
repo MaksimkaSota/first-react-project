@@ -1,7 +1,17 @@
 const ADD_POST_IN_STATE = 'ADD-POST-IN-STATE';
 const SET_POST_IN_STATE = 'SET-POST-IN-STATE';
 
-export const profileReducer = (state, action) => {
+const initialState = {
+  posts: [
+    {id: 1, message: 'Hi, how are you?', numberOfLike: 15},
+    {id: 2, message: 'It\'s my first post', numberOfLike: 20},
+    {id: 3, message: 'Blabla', numberOfLike: 20},
+    {id: 4, message: 'Dada', numberOfLike: 20},
+  ],
+  postText: 'I\'m default post text'
+}
+
+export const profileReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_POST_IN_STATE:
       const newPost = {
