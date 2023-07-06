@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
   return {
-    profileState: state.profilePage
+    posts: state.profilePage.posts,
+    postText: state.profilePage.postText,
   }
 }
 

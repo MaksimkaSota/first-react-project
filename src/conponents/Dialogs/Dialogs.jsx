@@ -2,17 +2,13 @@ import classes from './Dialogs.module.css';
 import { Dialog } from './Dialog/Dialog';
 import { Message } from './Message/Message';
 
-export const Dialogs = ({dialogsState, addMessage, setMessage}) => {
-  const dialogsElements = dialogsState.dialogs
+export const Dialogs = ({dialogs, messages, messageText, addMessage, setMessage}) => {
+  const dialogsElements = dialogs
     .map((dialog, index) => <Dialog name={dialog.name} id={dialog.id} key={index} />);
-  const messagesElements = dialogsState.messages
+  const messagesElements = messages
     .map((message, index) => <Message message={message.message} key={index} />);
-  const messageText = dialogsState.messageText;
 
-  const onAddMessage = () => {
-    addMessage();
-  };
-
+  const onAddMessage = () => { addMessage(); };
   const onSetMessage = (event) => {
     const text = event.target.value;
     setMessage(text);

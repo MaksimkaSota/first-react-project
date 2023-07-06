@@ -1,15 +1,11 @@
 import classes from './MyPosts.module.css';
 import { Post } from './Post/Post';
 
-export const MyPosts = ({profileState, addPost, setPost}) => {
-  const postsElements = profileState.posts
+export const MyPosts = ({posts, postText, addPost, setPost}) => {
+  const postsElements = posts
     .map((post, index) => <Post message={post.message} numberOfLike={post.numberOfLike} key={index} />);
-  const postText = profileState.postText;
 
-  const onAddPost = () => {
-    addPost();
-  };
-
+  const onAddPost = () => { addPost(); };
   const onSetPost = (event) => {
     const text = event.target.value;
     setPost(text);
