@@ -27,7 +27,7 @@ export const profileReducer = (state = initialState, action) => {
     case SET_POST_IN_STATE:
       return {
         ...state,
-        postText: action.newText
+        postText: action.payload
       };
     default:
       return state;
@@ -35,7 +35,4 @@ export const profileReducer = (state = initialState, action) => {
 }
 
 export const addPostActionCreator = () => ({type: ADD_POST_IN_STATE});
-export const setPostActionCreator = (text) => ({
-  type: SET_POST_IN_STATE,
-  newText: text
-});
+export const setPostActionCreator = (text) => ({type: SET_POST_IN_STATE, payload: text});

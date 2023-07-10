@@ -35,7 +35,7 @@ export const dialogsReducer = (state = initialState, action) => {
     case SET_MESSAGE_IN_STATE:
       return {
         ...state,
-        messageText: action.newText
+        messageText: action.payload
       }
     default:
       return state;
@@ -43,7 +43,4 @@ export const dialogsReducer = (state = initialState, action) => {
 }
 
 export const addMessageActionCreator = () => ({type: ADD_MESSAGE_IN_STATE});
-export const setMessageActionCreator = (text) => ({
-  type: SET_MESSAGE_IN_STATE,
-  newText: text
-});
+export const setMessageActionCreator = (text) => ({type: SET_MESSAGE_IN_STATE, payload: text});

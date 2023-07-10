@@ -3,7 +3,7 @@ const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'GET-USERS'
 
 const initialState = {
-  users: [ ]
+  users: []
 }
 
 export const usersReducer = (state = initialState, action) => {
@@ -12,7 +12,7 @@ export const usersReducer = (state = initialState, action) => {
       return {
         ...state,
         users: state.users.map((user) => {
-          if (user.id === action.userId) {
+          if (user.id === action.payload) {
             return {
               ...user,
               followed: true
@@ -25,7 +25,7 @@ export const usersReducer = (state = initialState, action) => {
       return {
         ...state,
         users: state.users.map((user) => {
-          if (user.id === action.userId) {
+          if (user.id === action.payload) {
             return {
               ...user,
               followed: false
@@ -37,16 +37,17 @@ export const usersReducer = (state = initialState, action) => {
     case SET_USERS:
       return {
         ...state,
-        users: [
-          ...state.users,
-          ...action.users
-        ]
+        users: action.payload
+        // users: [
+        //   ...state.users,
+        //   ...action.users
+        // ]
       }
     default:
       return state;
   }
 }
 
-export const followActionCreator = (userId) => ({type: FOLLOW, userId});
-export const unfollowActionCreator = (userId) => ({type: UNFOLLOW, userId});
-export const setUsersActionCreator = (users) => ({type: SET_USERS, users});
+export const followActionCreator = (userId) => ({type: FOLLOW, payload: userId});
+export const unfollowActionCreator = (userId) => ({type: UNFOLLOW, payload: userId});
+export const setUsersActionCreator = (users) => ({type: SET_USERS, payload: users});
