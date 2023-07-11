@@ -1,9 +1,14 @@
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
-const SET_USERS = 'GET-USERS'
+const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
+const GET_USERS = 'GET-USERS';
+const GET_TOTAL_COUNT = 'GET-TOTAL-COUNT';
 
 const initialState = {
-  users: []
+  users: [],
+  page: 1,
+  count: 10,
+  totalCount: 0,
 }
 
 export const usersReducer = (state = initialState, action) => {
@@ -34,14 +39,20 @@ export const usersReducer = (state = initialState, action) => {
           return user;
         })
       }
-    case SET_USERS:
+    case SET_CURRENT_PAGE:
+      return {
+        ...state,
+        page: action.payload
+      }
+    case GET_USERS:
       return {
         ...state,
         users: action.payload
-        // users: [
-        //   ...state.users,
-        //   ...action.users
-        // ]
+      }
+    case GET_TOTAL_COUNT:
+      return {
+        ...state,
+        totalCount: action.payload
       }
     default:
       return state;
@@ -50,4 +61,6 @@ export const usersReducer = (state = initialState, action) => {
 
 export const followActionCreator = (userId) => ({type: FOLLOW, payload: userId});
 export const unfollowActionCreator = (userId) => ({type: UNFOLLOW, payload: userId});
-export const setUsersActionCreator = (users) => ({type: SET_USERS, payload: users});
+export const setCurrentPageActionCreator = (page) => ({type: SET_CURRENT_PAGE, payload: page});
+export const getUsersActionCreator = (users) => ({type: GET_USERS, payload: users});
+export const getTotalCountActionCreator = (totalCount) => ({type: GET_TOTAL_COUNT, payload: totalCount});
