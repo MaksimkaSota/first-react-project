@@ -1,5 +1,6 @@
 import classes from './Users.module.css';
 import userPhoto from '../../assets/images/user.png';
+import { NavLink } from 'react-router-dom';
 
 export const Users = ({users, page, count, totalCount, follow, unfollow, onSetCurrentPage}) => {
   const pagesCount = Math.ceil(totalCount / count);
@@ -42,8 +43,12 @@ export const Users = ({users, page, count, totalCount, follow, unfollow, onSetCu
           <div key={index}>
             <div>
               <div>
-                <img className={classes.userPhoto} src={user.photos.small ? user.photos.small : userPhoto}
-                     alt="avatar" />
+                <NavLink to={`/profile/${user.id}`}>
+                  <img
+                    className={classes.userPhoto}
+                    src={user.photos.small ? user.photos.small : userPhoto}
+                    alt="avatar" />
+                </NavLink>
               </div>
               <div>
                 {

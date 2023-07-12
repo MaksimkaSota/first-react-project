@@ -1,10 +1,10 @@
-import { ProfileInfo } from './ProfileInfo/ProfileInfo';
+import { ProfileInfoContainer } from './ProfileInfo/ProfileInfoContainer';
 import { MyPostsContainer } from './MyPosts/MyPostsContainer';
 
 export const Profile = () => {
   return (
     <div>
-      <ProfileInfo />
+      <ProfileInfoContainer />
       <MyPostsContainer />
     </div>
   );

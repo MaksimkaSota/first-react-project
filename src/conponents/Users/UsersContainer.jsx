@@ -1,16 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import { follow, setCurrentPage, getTotalCount, getUsers, unfollow, setIsFetching } from '../../redux/users-reducer';
 import { Users } from './Users';
 import { Preloader } from '../common/Preloader/Preloader';
+import { http } from '../../http';
 // import { UsersAPIContainerFunction } from './UsersAPIContainerFunction';
 
 //ContainerComponentInside (AJAX requests)
 export class UsersAPIContainer extends React.Component {
   componentDidMount() {
     this.props.setIsFetching(true);
-    axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.page}&count=${this.props.count}`)
+    http.get(`users?page=${this.props.page}&count=${this.props.count}`)
       .then((response) => {
         this.props.getUsers(response.data.items);
         this.props.getTotalCount(response.data.totalCount);
@@ -21,7 +21,7 @@ export class UsersAPIContainer extends React.Component {
   onSetCurrentPage = (page) => () => {
     this.props.setIsFetching(true);
     this.props.setCurrentPage(page);
-    axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.count}`)
+    http.get(`users?page=${page}&count=${this.props.count}`)
       .then((response) => {
         this.props.getUsers(response.data.items);
         this.props.setIsFetching(false);
@@ -31,17 +31,19 @@ export class UsersAPIContainer extends React.Component {
   render() {
     return (
       <>
-        {this.props.isFetching ?
-          <Preloader /> :
-          <Users
-            users={this.props.users}
-            page={this.props.page}
-            count={this.props.count}
-            totalCount={this.props.totalCount}
-            follow={this.props.follow}
-            unfollow={this.props.unfollow}
-            onSetCurrentPage={this.onSetCurrentPage}
-          />}
+        {
+          this.props.isFetching ?
+            <Preloader /> :
+            <Users
+              users={this.props.users}
+              page={this.props.page}
+              count={this.props.count}
+              totalCount={this.props.totalCount}
+              follow={this.props.follow}
+              unfollow={this.props.unfollow}
+              onSetCurrentPage={this.onSetCurrentPage}
+            />
+        }
       </>
     );
   }

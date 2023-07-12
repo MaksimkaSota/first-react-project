@@ -3,14 +3,14 @@ const UNFOLLOW = 'UNFOLLOW';
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
 const GET_USERS = 'GET-USERS';
 const GET_TOTAL_COUNT = 'GET-TOTAL-COUNT';
-const SET_IS_FETCHING = 'SET-IS-FETCHING'
+const SET_IS_FETCHING = 'SET-IS-FETCHING';
 
 const initialState = {
   users: [],
   page: 1,
   count: 10,
   totalCount: 0,
-  isFetching: false
+  isFetching: true
 }
 
 export const usersReducer = (state = initialState, action) => {
