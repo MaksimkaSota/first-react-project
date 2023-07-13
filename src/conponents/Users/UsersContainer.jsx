@@ -27,6 +27,22 @@ export class UsersAPIContainer extends React.Component {
         this.props.setIsFetching(false);
       })
   }
+  onFollow = (id) => () => {
+    http.post(`follow/${id}`)
+      .then((response) => {
+        if (response.data.resultCode === 0) {
+          this.props.follow(id);
+        }
+      })
+  };
+  onUnfollow = (id) => () => {
+    http.delete(`follow/${id}`)
+      .then((response) => {
+        if (response.data.resultCode === 0) {
+          this.props.unfollow(id);
+        }
+      })
+  };
 
   render() {
     return (
@@ -39,8 +55,8 @@ export class UsersAPIContainer extends React.Component {
               page={this.props.page}
               count={this.props.count}
               totalCount={this.props.totalCount}
-              follow={this.props.follow}
-              unfollow={this.props.unfollow}
+              onFollow={this.onFollow}
+              onUnfollow={this.onUnfollow}
               onSetCurrentPage={this.onSetCurrentPage}
             />
         }

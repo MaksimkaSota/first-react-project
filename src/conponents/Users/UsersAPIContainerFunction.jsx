@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 import { Users } from './Users';
 import { Preloader } from '../common/Preloader/Preloader';
+import { http } from '../../http';
 
 export const UsersAPIContainerFunction = ({
                                             users,
@@ -35,6 +36,22 @@ export const UsersAPIContainerFunction = ({
         setIsFetching(false);
       })
   }
+  const onFollow = (id) => () => {
+    http.post(`follow/${id}`)
+      .then((response) => {
+        if (response.data.resultCode === 0) {
+          follow(id);
+        }
+      })
+  };
+  const onUnfollow = (id) => () => {
+    http.delete(`follow/${id}`)
+      .then((response) => {
+        if (response.data.resultCode === 0) {
+          unfollow(id);
+        }
+      })
+  };
 
   return (
     <>
@@ -46,8 +63,8 @@ export const UsersAPIContainerFunction = ({
             page={page}
             count={count}
             totalCount={totalCount}
-            follow={follow}
-            unfollow={unfollow}
+            onFollow={onFollow}
+            onUnfollow={onUnfollow}
             onSetCurrentPage={onSetCurrentPage}
           />
       }

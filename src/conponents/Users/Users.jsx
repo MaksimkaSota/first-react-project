@@ -2,7 +2,7 @@ import classes from './Users.module.css';
 import userPhoto from '../../assets/images/user.png';
 import { NavLink } from 'react-router-dom';
 
-export const Users = ({users, page, count, totalCount, follow, unfollow, onSetCurrentPage}) => {
+export const Users = ({users, page, count, totalCount, onFollow, onUnfollow, onSetCurrentPage}) => {
   const pagesCount = Math.ceil(totalCount / count);
   const pages = [];
   for (let i = 1; i <= pagesCount; i++) {
@@ -16,13 +16,6 @@ export const Users = ({users, page, count, totalCount, follow, unfollow, onSetCu
   } else {
     slicedPages = pages.slice(curPage - 3, curPage + 2);
   }
-
-  const onUnfollow = (id) => () => {
-    unfollow(id);
-  };
-  const onFollow = (id) => () => {
-    follow(id);
-  };
 
   return (
     <div>
