@@ -17,8 +17,7 @@ export const App = () => {
       <div className="app-wrapper-content">
         <Routes>
           <Route path="/dialogs/*" element={<DialogsContainer />} />
-          <Route path="/profile/*" element={<Profile />} />
-          {/*<Route path="/profile/:id" element={<Profile />} />*/}
+          <Route path="/profile/:id?" element={<Profile />} />
           <Route path="/users" element={<UsersContainer />} />
           <Route path="/news" element={<News />} />
           <Route path="/musics" element={<Musics />} />
