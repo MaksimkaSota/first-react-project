@@ -4,13 +4,15 @@ const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
 const GET_USERS = 'GET-USERS';
 const GET_TOTAL_COUNT = 'GET-TOTAL-COUNT';
 const SET_IS_FETCHING = 'SET-IS-FETCHING';
+const SET_SUBSCRIPTIONS_ID = 'SET-SUBSCRIPTIONS-ID';
 
 const initialState = {
   users: [],
   page: 1,
   count: 10,
   totalCount: 0,
-  isFetching: true
+  isFetching: true,
+  subscriptionsId: []
 }
 
 export const usersReducer = (state = initialState, action) => {
@@ -61,6 +63,14 @@ export const usersReducer = (state = initialState, action) => {
         ...state,
         isFetching: action.payload
       }
+    case SET_SUBSCRIPTIONS_ID:
+      return {
+        ...state,
+        subscriptionsId:
+          action.payload.isFetching ?
+            [...state.subscriptionsId, action.payload.userId] :
+            state.subscriptionsId.filter((id) => id !== action.payload.userId)
+      }
     default:
       return state;
   }
@@ -72,3 +82,7 @@ export const setCurrentPage = (page) => ({type: SET_CURRENT_PAGE, payload: page}
 export const getUsers = (users) => ({type: GET_USERS, payload: users});
 export const getTotalCount = (totalCount) => ({type: GET_TOTAL_COUNT, payload: totalCount});
 export const setIsFetching = (isFetching) => ({type: SET_IS_FETCHING, payload: isFetching});
+export const setSubscriptionsId = (userId, isFetching) => ({
+  type: SET_SUBSCRIPTIONS_ID,
+  payload: {userId, isFetching}
+});

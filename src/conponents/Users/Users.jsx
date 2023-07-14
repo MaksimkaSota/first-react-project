@@ -2,7 +2,16 @@ import classes from './Users.module.css';
 import userPhoto from '../../assets/images/user.png';
 import { NavLink } from 'react-router-dom';
 
-export const Users = ({users, page, count, totalCount, onFollow, onUnfollow, onSetCurrentPage}) => {
+export const Users = ({
+                        users,
+                        page,
+                        count,
+                        totalCount,
+                        subscriptionsId,
+                        onFollow,
+                        onUnfollow,
+                        onSetCurrentPage
+                      }) => {
   const pagesCount = Math.ceil(totalCount / count);
   const pages = [];
   for (let i = 1; i <= pagesCount; i++) {
@@ -46,8 +55,16 @@ export const Users = ({users, page, count, totalCount, onFollow, onUnfollow, onS
               <div>
                 {
                   user.followed ?
-                    <button onClick={onUnfollow(user.id)}>Unfollow</button> :
-                    <button onClick={onFollow(user.id)}>Follow</button>
+                    <button
+                      disabled={subscriptionsId.includes(user.id)}
+                      onClick={onUnfollow(user.id)}>
+                      Unfollow
+                    </button> :
+                    <button
+                      disabled={subscriptionsId.includes(user.id)}
+                      onClick={onFollow(user.id)}>
+                      Follow
+                    </button>
                 }
               </div>
             </div>

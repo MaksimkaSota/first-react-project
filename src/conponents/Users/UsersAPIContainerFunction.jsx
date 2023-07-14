@@ -10,43 +10,49 @@ export const UsersAPIContainerFunction = ({
                                             count,
                                             totalCount,
                                             isFetching,
+                                            subscriptionsId,
                                             follow,
                                             unfollow,
                                             setCurrentPage,
                                             getUsers,
                                             getTotalCount,
-                                            setIsFetching
+                                            setIsFetching,
+                                            setSubscriptionsId
                                           }) => {
   useEffect(() => {
     setIsFetching(true);
     usersAPI.getUsers(page, count).then((data) => {
-        getUsers(data.items);
-        getTotalCount(data.totalCount);
-        setIsFetching(false);
-      })
+      getUsers(data.items);
+      getTotalCount(data.totalCount);
+      setIsFetching(false);
+    })
   }, []);
 
   const onSetCurrentPage = (page) => () => {
     setIsFetching(true);
     setCurrentPage(page);
     usersAPI.getUsers(page, count).then((data) => {
-        getUsers(data.items);
-        setIsFetching(false);
-      })
+      getUsers(data.items);
+      setIsFetching(false);
+    })
   }
   const onFollow = (id) => () => {
+    setSubscriptionsId(id, true);
     followAPI.follow(id).then((data) => {
-        if (data.resultCode === 0) {
-          follow(id);
-        }
-      })
+      if (data.resultCode === 0) {
+        follow(id);
+      }
+      setSubscriptionsId(id, false);
+    })
   };
   const onUnfollow = (id) => () => {
+    setSubscriptionsId(id, true);
     followAPI.unfollow(id).then((data) => {
-        if (data.resultCode === 0) {
-          unfollow(id);
-        }
-      })
+      if (data.resultCode === 0) {
+        unfollow(id);
+      }
+      setSubscriptionsId(id, false);
+    })
   };
 
   return (
@@ -59,6 +65,7 @@ export const UsersAPIContainerFunction = ({
             page={page}
             count={count}
             totalCount={totalCount}
+            subscriptionsId={subscriptionsId}
             onFollow={onFollow}
             onUnfollow={onUnfollow}
             onSetCurrentPage={onSetCurrentPage}

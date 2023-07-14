@@ -1,6 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { follow, setCurrentPage, getTotalCount, getUsers, unfollow, setIsFetching } from '../../redux/users-reducer';
+import {
+  follow,
+  setCurrentPage,
+  getTotalCount,
+  getUsers,
+  unfollow,
+  setIsFetching,
+  setSubscriptionsId
+} from '../../redux/users-reducer';
 import { Users } from './Users';
 import { Preloader } from '../common/Preloader/Preloader';
 import { usersAPI } from '../../api/usersAPI';
@@ -27,17 +35,21 @@ export class UsersAPIContainer extends React.Component {
     })
   }
   onFollow = (id) => () => {
+    this.props.setSubscriptionsId(id, true);
     followAPI.follow(id).then((data) => {
         if (data.resultCode === 0) {
           this.props.follow(id);
         }
+      this.props.setSubscriptionsId(id, false);
       })
   };
   onUnfollow = (id) => () => {
+    this.props.setSubscriptionsId(id, true);
     followAPI.unfollow(id).then((data) => {
         if (data.resultCode === 0) {
           this.props.unfollow(id);
         }
+      this.props.setSubscriptionsId(id, false);
       })
   };
 
@@ -52,6 +64,7 @@ export class UsersAPIContainer extends React.Component {
               page={this.props.page}
               count={this.props.count}
               totalCount={this.props.totalCount}
+              subscriptionsId={this.props.subscriptionsId}
               onFollow={this.onFollow}
               onUnfollow={this.onUnfollow}
               onSetCurrentPage={this.onSetCurrentPage}
@@ -70,8 +83,9 @@ const mapStateToProps = (state) => {
     count: state.usersPage.count,
     totalCount: state.usersPage.totalCount,
     isFetching: state.usersPage.isFetching,
+    subscriptionsId: state.usersPage.subscriptionsId
   }
 };
-const mapDispatchToProps = {follow, unfollow, setCurrentPage, getUsers, getTotalCount, setIsFetching};
+const mapDispatchToProps = {follow, unfollow, setCurrentPage, getUsers, getTotalCount, setIsFetching, setSubscriptionsId};
 
 export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersAPIContainer);
