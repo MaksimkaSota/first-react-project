@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import axios from 'axios';
 import { Preloader } from '../../common/Preloader/Preloader';
 import { ProfileInfo } from './ProfileInfo';
 import { useParams } from 'react-router-dom';
+import { profileAPI } from '../../../api/profileAPI';
 
 export const ProfileInfoAPIContainerFunction = ({profile, isFetching, getProfile, setIsFetching}) => {
   let { id } = useParams();
@@ -11,9 +11,8 @@ export const ProfileInfoAPIContainerFunction = ({profile, isFetching, getProfile
   }
   useEffect(() => {
     setIsFetching(true);
-    axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${id}`)
-      .then((response) => {
-        getProfile(response.data);
+    profileAPI.getProfile(id).then((data) => {
+        getProfile(data);
         setIsFetching(false);
       })
   }, []);

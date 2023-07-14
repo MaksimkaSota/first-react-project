@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import axios from 'axios';
 import { Users } from './Users';
 import { Preloader } from '../common/Preloader/Preloader';
-import { http } from '../../http';
+import { followAPI } from '../../api/followAPI';
+import { usersAPI } from '../../api/usersAPI';
 
 export const UsersAPIContainerFunction = ({
                                             users,
@@ -19,10 +19,9 @@ export const UsersAPIContainerFunction = ({
                                           }) => {
   useEffect(() => {
     setIsFetching(true);
-    axios.get('https://social-network.samuraijs.com/api/1.0/users')
-      .then((response) => {
-        getUsers(response.data.items);
-        getTotalCount(response.data.totalCount);
+    usersAPI.getUsers(page, count).then((data) => {
+        getUsers(data.items);
+        getTotalCount(data.totalCount);
         setIsFetching(false);
       })
   }, []);
@@ -30,24 +29,21 @@ export const UsersAPIContainerFunction = ({
   const onSetCurrentPage = (page) => () => {
     setIsFetching(true);
     setCurrentPage(page);
-    axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${count}`)
-      .then((response) => {
-        getUsers(response.data.items);
+    usersAPI.getUsers(page, count).then((data) => {
+        getUsers(data.items);
         setIsFetching(false);
       })
   }
   const onFollow = (id) => () => {
-    http.post(`follow/${id}`)
-      .then((response) => {
-        if (response.data.resultCode === 0) {
+    followAPI.follow(id).then((data) => {
+        if (data.resultCode === 0) {
           follow(id);
         }
       })
   };
   const onUnfollow = (id) => () => {
-    http.delete(`follow/${id}`)
-      .then((response) => {
-        if (response.data.resultCode === 0) {
+    followAPI.unfollow(id).then((data) => {
+        if (data.resultCode === 0) {
           unfollow(id);
         }
       })

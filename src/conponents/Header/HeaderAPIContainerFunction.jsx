@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
-import { http } from '../../http';
 import { Header } from './Header';
+import { authAPI } from '../../api/authAPI';
 
 export const ProfileInfoAPIContainerFunction = ({login, isAuth, getAuthUserData}) => {
   useEffect(() => {
-    http.get(`auth/me`)
-      .then((response) => {
-        if (response.data.resultCode === 0) {
-          getAuthUserData(response.data.data);
+    authAPI.getAuth().then((data) => {
+        if (data.resultCode === 0) {
+          getAuthUserData(data.data);
         }
       })
   }, []);

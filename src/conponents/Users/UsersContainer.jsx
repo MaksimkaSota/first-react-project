@@ -3,42 +3,39 @@ import { connect } from 'react-redux';
 import { follow, setCurrentPage, getTotalCount, getUsers, unfollow, setIsFetching } from '../../redux/users-reducer';
 import { Users } from './Users';
 import { Preloader } from '../common/Preloader/Preloader';
-import { http } from '../../http';
+import { usersAPI } from '../../api/usersAPI';
+import { followAPI } from '../../api/followAPI';
 // import { UsersAPIContainerFunction } from './UsersAPIContainerFunction';
 
 //ContainerComponentInside (AJAX requests)
 export class UsersAPIContainer extends React.Component {
   componentDidMount() {
     this.props.setIsFetching(true);
-    http.get(`users?page=${this.props.page}&count=${this.props.count}`)
-      .then((response) => {
-        this.props.getUsers(response.data.items);
-        this.props.getTotalCount(response.data.totalCount);
-        this.props.setIsFetching(false);
-      })
+    usersAPI.getUsers(this.props.page, this.props.count).then((data) => {
+      this.props.getUsers(data.items);
+      this.props.getTotalCount(data.totalCount);
+      this.props.setIsFetching(false);
+    })
   }
 
   onSetCurrentPage = (page) => () => {
     this.props.setIsFetching(true);
     this.props.setCurrentPage(page);
-    http.get(`users?page=${page}&count=${this.props.count}`)
-      .then((response) => {
-        this.props.getUsers(response.data.items);
-        this.props.setIsFetching(false);
-      })
+    usersAPI.getUsers(page, this.props.count).then((data) => {
+      this.props.getUsers(data.items);
+      this.props.setIsFetching(false);
+    })
   }
   onFollow = (id) => () => {
-    http.post(`follow/${id}`)
-      .then((response) => {
-        if (response.data.resultCode === 0) {
+    followAPI.follow(id).then((data) => {
+        if (data.resultCode === 0) {
           this.props.follow(id);
         }
       })
   };
   onUnfollow = (id) => () => {
-    http.delete(`follow/${id}`)
-      .then((response) => {
-        if (response.data.resultCode === 0) {
+    followAPI.unfollow(id).then((data) => {
+        if (data.resultCode === 0) {
           this.props.unfollow(id);
         }
       })

@@ -1,18 +1,18 @@
 import React from 'react';
 import { Header } from './Header';
-import { http } from '../../http';
 import { connect } from 'react-redux';
 import { getAuthUserData } from '../../redux/auth-reduser';
+import { authAPI } from '../../api/authAPI';
 // import { ProfileInfoAPIContainerFunction } from './HeaderAPIContainerFunction';
 
-export class HeaderAPIContainer extends React.Component  {
+//ContainerComponentInside (AJAX requests)
+export class HeaderAPIContainer extends React.Component {
   componentDidMount() {
-    http.get(`auth/me`)
-      .then((response) => {
-        if (response.data.resultCode === 0) {
-          this.props.getAuthUserData(response.data.data);
-        }
-      })
+    authAPI.getAuth().then((data) => {
+      if (data.resultCode === 0) {
+        this.props.getAuthUserData(data.data);
+      }
+    })
   }
 
   render() {
@@ -22,6 +22,7 @@ export class HeaderAPIContainer extends React.Component  {
   }
 }
 
+//ContainerComponentOutside (communicates with the store)
 const mapStateToProps = (state) => {
   return {
     login: state.auth.login,
