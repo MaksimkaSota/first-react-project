@@ -18,7 +18,7 @@ const initialState = {
     {id: 5, message: 'Yo'},
   ],
   messageText: 'I\'m default message text'
-}
+};
 
 export const dialogsReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -40,7 +40,7 @@ export const dialogsReducer = (state = initialState, action) => {
     default:
       return state;
   }
-}
+};
 
 export const addMessage = () => ({type: ADD_MESSAGE_IN_STATE});
 export const setMessage = (text) => ({type: SET_MESSAGE_IN_STATE, payload: text});

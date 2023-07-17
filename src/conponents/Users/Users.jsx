@@ -49,7 +49,8 @@ export const Users = ({
                   <img
                     className={classes.userPhoto}
                     src={user.photos.small ? user.photos.small : userPhoto}
-                    alt="avatar" />
+                    alt="avatar"
+                  />
                 </NavLink>
               </div>
               <div>

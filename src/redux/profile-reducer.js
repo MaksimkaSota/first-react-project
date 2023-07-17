@@ -1,6 +1,8 @@
+import { getProfileAPI } from '../api/profileAPI';
+
 const ADD_POST_IN_STATE = 'ADD-POST-IN-STATE';
 const SET_POST_IN_STATE = 'SET-POST-IN-STATE';
-const GET_PROFILE = 'GET-PROFILE';
+const SET_PROFILE = 'SET-PROFILE';
 const SET_IS_FETCHING = 'SET-IS-FETCHING'
 
 const initialState = {
@@ -13,7 +15,7 @@ const initialState = {
   postText: 'I\'m default post text',
   profile: null,
   isFetching: true
-}
+};
 
 export const profileReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -33,7 +35,7 @@ export const profileReducer = (state = initialState, action) => {
         ...state,
         postText: action.payload
       };
-    case GET_PROFILE:
+    case SET_PROFILE:
       return {
         ...state,
         profile: action.payload
@@ -46,9 +48,19 @@ export const profileReducer = (state = initialState, action) => {
     default:
       return state;
   }
-}
+};
 
+//ActionCreators
 export const addPost = () => ({type: ADD_POST_IN_STATE});
 export const setPost = (text) => ({type: SET_POST_IN_STATE, payload: text});
-export const getProfile = (profile) => ({type: GET_PROFILE, payload: profile});
+export const setProfile = (profile) => ({type: SET_PROFILE, payload: profile});
 export const setIsFetching = (isFetching) => ({type: SET_IS_FETCHING, payload: isFetching});
+
+//ThunkCreators
+export const getProfile = (userId) => (dispatch) => {
+  dispatch(setIsFetching(true));
+  getProfileAPI(userId).then((data) => {
+    dispatch(setProfile(data));
+    dispatch(setIsFetching(false));
+  });
+};

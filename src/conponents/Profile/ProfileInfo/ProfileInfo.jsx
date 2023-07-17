@@ -1,4 +1,5 @@
 import classes from './ProfileInfo.module.css';
+import userPhoto from '../../../assets/images/user.png';
 
 export const ProfileInfo = ({profile}) => {
   return (
@@ -11,8 +12,11 @@ export const ProfileInfo = ({profile}) => {
       <div className={classes.descriptionBlock}>
         <div>{profile.fullName}</div>
         <div>{profile.lookingForAJobDescription}</div>
-        <img src={profile.photos.large} alt="" />
-        ava + desc
+        <img
+          className={classes.userPhoto}
+          src={profile.photos.large ? profile.photos.large : userPhoto}
+          alt="avatar"
+        />
       </div>
     </div>
   );

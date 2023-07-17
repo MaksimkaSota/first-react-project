@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import { Users } from './Users';
 import { Preloader } from '../common/Preloader/Preloader';
-import { followAPI } from '../../api/followAPI';
-import { usersAPI } from '../../api/usersAPI';
 
 export const UsersAPIContainerFunction = ({
                                             users,
@@ -13,46 +11,20 @@ export const UsersAPIContainerFunction = ({
                                             subscriptionsId,
                                             follow,
                                             unfollow,
-                                            setCurrentPage,
                                             getUsers,
-                                            getTotalCount,
-                                            setIsFetching,
-                                            setSubscriptionsId
                                           }) => {
   useEffect(() => {
-    setIsFetching(true);
-    usersAPI.getUsers(page, count).then((data) => {
-      getUsers(data.items);
-      getTotalCount(data.totalCount);
-      setIsFetching(false);
-    })
+    getUsers(page, count);
   }, []);
 
   const onSetCurrentPage = (page) => () => {
-    setIsFetching(true);
-    setCurrentPage(page);
-    usersAPI.getUsers(page, count).then((data) => {
-      getUsers(data.items);
-      setIsFetching(false);
-    })
+    getUsers(page, count);
   }
   const onFollow = (id) => () => {
-    setSubscriptionsId(id, true);
-    followAPI.follow(id).then((data) => {
-      if (data.resultCode === 0) {
-        follow(id);
-      }
-      setSubscriptionsId(id, false);
-    })
+    follow(id);
   };
   const onUnfollow = (id) => () => {
-    setSubscriptionsId(id, true);
-    followAPI.unfollow(id).then((data) => {
-      if (data.resultCode === 0) {
-        unfollow(id);
-      }
-      setSubscriptionsId(id, false);
-    })
+    unfollow(id);
   };
 
   return (
