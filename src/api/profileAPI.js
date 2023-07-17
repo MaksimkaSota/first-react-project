@@ -1,6 +1,6 @@
 import { http } from './http';
 
-export const getProfileAPI = (userId) => {
-  return http.get(`profile/${userId}`)
-    .then(response => response.data);
+export const getProfileAPI = async (userId) => {
+  const response = await http.get(`profile/${userId}`);
+  return await response.data;
 };

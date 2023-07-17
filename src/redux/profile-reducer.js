@@ -57,10 +57,11 @@ export const setProfile = (profile) => ({type: SET_PROFILE, payload: profile});
 export const setIsFetching = (isFetching) => ({type: SET_IS_FETCHING, payload: isFetching});
 
 //ThunkCreators
-export const getProfile = (userId) => (dispatch) => {
-  dispatch(setIsFetching(true));
-  getProfileAPI(userId).then((data) => {
+export const getProfile = (userId) => {
+  return async (dispatch) => {
+    dispatch(setIsFetching(true));
+    const data = await getProfileAPI(userId);
     dispatch(setProfile(data));
     dispatch(setIsFetching(false));
-  });
+  }
 };

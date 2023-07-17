@@ -92,35 +92,32 @@ export const setSubscriptionsId = (userId, isFetching) => ({
 
 //ThunkCreators
 export const getUsers = (page, count) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(setIsFetching(true));
-    getUsersAPI(page, count).then((data) => {
-      dispatch(setCurrentPage(page));
-      dispatch(setUsers(data.items));
-      dispatch(setTotalCount(data.totalCount));
-      dispatch(setIsFetching(false));
-    })
+    const data = await getUsersAPI(page, count);
+    dispatch(setCurrentPage(page));
+    dispatch(setUsers(data.items));
+    dispatch(setTotalCount(data.totalCount));
+    dispatch(setIsFetching(false));
   }
 };
 export const follow = (id) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(setSubscriptionsId(id, true));
-    followAPI(id).then((data) => {
-      if (data.resultCode === 0) {
-        dispatch(followSuccess(id));
-      }
-      dispatch(setSubscriptionsId(id, false));
-    })
+    const data = await followAPI(id);
+    if (data.resultCode === 0) {
+      dispatch(followSuccess(id));
+    }
+    dispatch(setSubscriptionsId(id, false));
   }
 };
 export const unfollow = (id) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(setSubscriptionsId(id, true));
-    unfollowAPI(id).then((data) => {
-      if (data.resultCode === 0) {
-        dispatch(unfollowSuccess(id));
-      }
-      dispatch(setSubscriptionsId(id, false));
-    })
+    const data = await unfollowAPI(id);
+    if (data.resultCode === 0) {
+      dispatch(unfollowSuccess(id));
+    }
+    dispatch(setSubscriptionsId(id, false));
   }
 };

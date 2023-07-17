@@ -26,10 +26,11 @@ export const authReducer = (state = initialState, action) => {
 export const setAuthUserData = (data) => ({type: SET_AUTH_USER_DATA, payload: data});
 
 //ThunkCreators
-export const getAuthUserData = () => (dispatch) => {
-  getAuthAPI().then((data) => {
+export const getAuthUserData = () => {
+  return async (dispatch) => {
+    const data = await getAuthAPI();
     if (data.resultCode === 0) {
       dispatch(setAuthUserData(data.data));
     }
-  })
+  }
 };
