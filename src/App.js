@@ -8,6 +8,8 @@ import { Musics } from './conponents/Musics/Musics';
 import { DialogsContainer } from './conponents/Dialogs/DialogsContainer';
 import { UsersContainer } from './conponents/Users/UsersContainer';
 import { HeaderContainer } from './conponents/Header/HeaderContainer';
+import { Login } from './conponents/Login/Login';
+import { ProfileContainer } from './conponents/Profile/ProfileContainer';
 
 export const App = () => {
   return (
@@ -17,8 +19,9 @@ export const App = () => {
       <div className="app-wrapper-content">
         <Routes>
           <Route path="/dialogs/*" element={<DialogsContainer />} />
-          <Route path="/profile/:id?" element={<Profile />} />
+          <Route path="/profile/:id?" element={<ProfileContainer />} />
           <Route path="/users" element={<UsersContainer />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/news" element={<News />} />
           <Route path="/musics" element={<Musics />} />
           <Route path="/settings" element={<Settings />} />

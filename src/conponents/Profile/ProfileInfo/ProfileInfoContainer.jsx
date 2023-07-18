@@ -4,6 +4,7 @@ import { Preloader } from '../../common/Preloader/Preloader';
 import { ProfileInfo } from './ProfileInfo';
 import { getProfile } from '../../../redux/profile-reducer';
 import { withRouter } from '../../../withRouterFromReactRouterDomV5';
+import { compose } from 'redux';
 // import { ProfileInfoAPIContainerFunction } from './ProfileInfoAPIContainerFunction';
 
 //ContainerComponentInside (AJAX requests)
@@ -36,4 +37,7 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = {getProfile};
 
-export const ProfileInfoContainer = connect(mapStateToProps, mapDispatchToProps)(withRouter(ProfileInfoAPIContainer));
+export const ProfileInfoContainer = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withRouter
+)(ProfileInfoAPIContainer);
