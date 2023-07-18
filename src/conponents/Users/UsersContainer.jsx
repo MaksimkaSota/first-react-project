@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { follow, getUsers, unfollow } from '../../redux/users-reducer';
 import { Users } from './Users';
 import { Preloader } from '../common/Preloader/Preloader';
+import { WithAuthRedirect } from '../../hoc/withAuthRedirect';
+import { Dialogs } from '../Dialogs/Dialogs';
+import { compose } from 'redux';
 // import { UsersAPIContainerFunction } from './UsersAPIContainerFunction';
 
 //ContainerComponentInside (AJAX requests)
@@ -55,4 +58,7 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = {follow, unfollow, getUsers};
 
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersAPIContainer);
+export const UsersContainer = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  WithAuthRedirect,
+)(UsersAPIContainer);
