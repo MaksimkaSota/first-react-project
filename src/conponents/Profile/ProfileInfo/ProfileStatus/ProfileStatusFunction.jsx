@@ -1,33 +1,35 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export const ProfileStatusFunction = ({status}) => {
-  const [state, setState] = useState({
-    editMode: false
-  });
+export const ProfileStatusFunction = ({status, updateStatus}) => {
+  const [editMode, setEditMode] = useState(false);
+  const [localStatus, setLocalStatus] = useState(status);
+
+  useEffect(() => {
+    setLocalStatus(status);
+  }, [status]);
 
   const onActivateEditMode = () => {
-    console.log(state.editMode);
-    setState({
-      editMode: true
-    });
-    console.log(state.editMode);
+    setEditMode(true);
   };
 
   const onDeactivateEditMode = () => {
-    setState({
-      editMode: false
-    });
+    setEditMode(false);
+    updateStatus(localStatus);
   };
+
+  const onChangeLocalStatus = (event) => {
+    setLocalStatus(event.target.value);
+  }
 
   return (
     <div>
       {
-        !state.editMode ?
+        !editMode ?
           <div>
-            <span onDoubleClick={onActivateEditMode}>{status}</span>
+            <span onDoubleClick={onActivateEditMode}>{status || 'no status'}</span>
           </div> :
           <div>
-            <input autoFocus={true} onBlur={onDeactivateEditMode} value={status} />
+            <input onChange={onChangeLocalStatus} autoFocus={true} onBlur={onDeactivateEditMode} value={localStatus} />
           </div>
       }
     </div>

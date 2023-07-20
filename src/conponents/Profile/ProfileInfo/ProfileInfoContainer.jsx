@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Preloader } from '../../common/Preloader/Preloader';
 import { ProfileInfo } from './ProfileInfo';
-import { getProfile } from '../../../redux/profile-reducer';
+import { getProfile, getStatus, updateStatus } from '../../../redux/profile-reducer';
 import { withRouter } from '../../../withRouterFromReactRouterDomV5';
 import { compose } from 'redux';
 // import { ProfileInfoAPIContainerFunction } from './ProfileInfoAPIContainerFunction';
@@ -12,9 +12,10 @@ export class ProfileInfoAPIContainer extends React.Component {
   componentDidMount() {
     let userId = this.props.router.params.id;
     if (!userId) {
-      userId = 2;
+      userId = 29516;
     }
     this.props.getProfile(userId);
+    this.props.getStatus(userId);
   }
 
   render() {
@@ -23,7 +24,7 @@ export class ProfileInfoAPIContainer extends React.Component {
         {
           this.props.isFetching ?
             <Preloader /> :
-            <ProfileInfo profile={this.props.profile} />
+            <ProfileInfo profile={this.props.profile} status={this.props.status} updateStatus={this.props.updateStatus} />
         }
       </>
     )
@@ -34,8 +35,9 @@ export class ProfileInfoAPIContainer extends React.Component {
 const mapStateToProps = (state) => ({
   profile: state.profilePage.profile,
   isFetching: state.profilePage.isFetching,
+  status: state.profilePage.status
 });
-const mapDispatchToProps = {getProfile};
+const mapDispatchToProps = {getProfile, getStatus, updateStatus};
 
 export const ProfileInfoContainer = compose(
   connect(mapStateToProps, mapDispatchToProps),
