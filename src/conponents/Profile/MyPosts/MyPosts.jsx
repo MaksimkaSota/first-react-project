@@ -1,27 +1,19 @@
 import classes from './MyPosts.module.css';
 import { Post } from './Post/Post';
+import { MyPostReduxForm } from './Post/MyPostForm/MyPostForm';
 
-export const MyPosts = ({posts, postText, addPost, setPost}) => {
+export const MyPosts = ({posts, addPost}) => {
   const postsElements = posts
     .map((post, index) => <Post message={post.message} numberOfLike={post.numberOfLike} key={index} />);
 
-  const onAddPost = () => { addPost(); };
-  const onSetPost = (event) => {
-    const text = event.target.value;
-    setPost(text);
+  const onSubmitPost = (formData) => {
+    addPost(formData.text);
   }
 
   return (
     <div className={classes.postsBlock}>
       <h3>My posts</h3>
-      <div>
-        <div>
-          <textarea onChange={onSetPost} value={postText} />
-        </div>
-        <div>
-          <button onClick={onAddPost}>Add post</button>
-        </div>
-      </div>
+      <MyPostReduxForm onSubmit={onSubmitPost} />
       <div className={classes.posts}>
         {postsElements}
       </div>

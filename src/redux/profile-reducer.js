@@ -1,7 +1,6 @@
 import { getProfileAPI, getStatusAPI, updateStatusAPI } from '../api/profileAPI';
 
 const ADD_POST_IN_STATE = 'ADD-POST-IN-STATE';
-const SET_POST_IN_STATE = 'SET-POST-IN-STATE';
 const SET_PROFILE = 'SET-PROFILE';
 const SET_IS_FETCHING = 'SET-IS-FETCHING'
 const SET_STATUS = 'SET-STATUS';
@@ -13,7 +12,6 @@ const initialState = {
     {id: 3, message: 'Blabla', numberOfLike: 20},
     {id: 4, message: 'Dada', numberOfLike: 20},
   ],
-  postText: 'I\'m default post text',
   profile: null,
   isFetching: true,
   status: ''
@@ -24,18 +22,12 @@ export const profileReducer = (state = initialState, action) => {
     case ADD_POST_IN_STATE:
       const newPost = {
         id: 5,
-        message: state.postText,
+        message: action.payload,
         numberOfLike: 0
       };
       return {
         ...state,
-        posts: [...state.posts, newPost],
-        postText: ''
-      };
-    case SET_POST_IN_STATE:
-      return {
-        ...state,
-        postText: action.payload
+        posts: [...state.posts, newPost]
       };
     case SET_PROFILE:
       return {
@@ -58,8 +50,7 @@ export const profileReducer = (state = initialState, action) => {
 };
 
 //ActionCreators
-export const addPost = () => ({type: ADD_POST_IN_STATE});
-export const setPost = (text) => ({type: SET_POST_IN_STATE, payload: text});
+export const addPost = (text) => ({type: ADD_POST_IN_STATE, payload: text});
 export const setProfile = (profile) => ({type: SET_PROFILE, payload: profile});
 export const setIsFetching = (isFetching) => ({type: SET_IS_FETCHING, payload: isFetching});
 export const setStatus = (status) => ({type: SET_STATUS, payload: status});

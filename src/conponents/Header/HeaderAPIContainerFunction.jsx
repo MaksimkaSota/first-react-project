@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Header } from './Header';
 
-export const ProfileInfoAPIContainerFunction = ({login, isAuth, getAuthUserData}) => {
+export const HeaderAPIContainerFunction = ({login, isAuth, getAuthUserData}) => {
   useEffect(() => {
     getAuthUserData();
   }, []);

@@ -1,5 +1,4 @@
 const ADD_MESSAGE_IN_STATE = 'ADD-MESSAGE-IN-STATE';
-const SET_MESSAGE_IN_STATE = 'SET-MESSAGE-IN-STATE';
 
 const initialState = {
   dialogs: [
@@ -16,8 +15,7 @@ const initialState = {
     {id: 3, message: 'Yo'},
     {id: 4, message: 'Yo'},
     {id: 5, message: 'Yo'},
-  ],
-  messageText: 'I\'m default message text'
+  ]
 };
 
 export const dialogsReducer = (state = initialState, action) => {
@@ -25,22 +23,15 @@ export const dialogsReducer = (state = initialState, action) => {
     case ADD_MESSAGE_IN_STATE:
       const newMessage = {
         id: 6,
-        message: state.messageText
+        message: action.payload
       };
       return {
         ...state,
         messages: [...state.messages, newMessage],
-        messageText: ''
-      }
-    case SET_MESSAGE_IN_STATE:
-      return {
-        ...state,
-        messageText: action.payload
       }
     default:
       return state;
   }
 };
 
-export const addMessage = () => ({type: ADD_MESSAGE_IN_STATE});
-export const setMessage = (text) => ({type: SET_MESSAGE_IN_STATE, payload: text});
+export const addMessage = (text) => ({type: ADD_MESSAGE_IN_STATE, payload: text});

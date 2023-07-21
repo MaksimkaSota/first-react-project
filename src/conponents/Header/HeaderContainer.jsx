@@ -2,7 +2,7 @@ import React from 'react';
 import { Header } from './Header';
 import { connect } from 'react-redux';
 import { getAuthUserData } from '../../redux/auth-reduser';
-// import { ProfileInfoAPIContainerFunction } from './HeaderAPIContainerFunction';
+// import { HeaderAPIContainerFunction } from './HeaderAPIContainerFunction';
 
 //ContainerComponentInside (AJAX requests)
 export class HeaderAPIContainer extends React.Component {

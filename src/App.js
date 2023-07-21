@@ -1,6 +1,5 @@
 import './App.css';
 import { Navbar } from './conponents/Navbar/Navbar';
-import { Profile } from './conponents/Profile/Profile';
 import { Route, Routes } from 'react-router-dom';
 import { News } from './conponents/News/News';
 import { Settings } from './conponents/Settings/Settings';
