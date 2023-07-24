@@ -1,17 +1,35 @@
 import { Field, reduxForm } from 'redux-form';
+import { FormControl } from '../../common/FormsControls/FormsControls';
+import { requiredField } from '../../../utils/validators/validators';
+import classes from './LoginForm.module.css';
 
-const LoginForm = ({handleSubmit}) => {
+const LoginForm = ({handleSubmit, error}) => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <Field placeholder={'Login'} component={'input'} name={'login'} />
+        <Field placeholder={'Email'}
+               component={FormControl}
+               name={'email'}
+               validate={[requiredField]}
+               child={'input'}
+        />
       </div>
       <div>
-        <Field placeholder={'Password'} component={'input'} name={'password'} />
+        <Field placeholder={'Password'}
+               component={FormControl}
+               name={'password'}
+               validate={[requiredField]}
+               child={'input'}
+               type={'password'}
+               autoComplete="on"
+        />
       </div>
       <div>
-        <Field component={'input'} type={'checkbox'} name={'rememberMe'} /> remember me
+        <Field component={FormControl} name={'rememberMe'} type={'checkbox'} child={'input'} /> remember me
       </div>
+      {error && <div className={classes.formSummaryError}>
+        {error}
+      </div>}
       <div>
         <button>Login</button>
       </div>

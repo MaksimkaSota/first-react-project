@@ -3,10 +3,10 @@ import { Preloader } from '../../common/Preloader/Preloader';
 import { ProfileInfo } from './ProfileInfo';
 import { useParams } from 'react-router-dom';
 
-export const ProfileInfoAPIContainerFunction = ({profile, isFetching, getProfile}) => {
+export const ProfileInfoAPIContainerFunction = ({profile, isFetching, getProfile, authorizedUserId}) => {
   let {id} = useParams();
   if (!id) {
-    id = 2
+    id = authorizedUserId;
   }
   useEffect(() => {
     getProfile(id);

@@ -10,9 +10,10 @@ import { compose } from 'redux';
 //ContainerComponentInside (AJAX requests)
 export class ProfileInfoAPIContainer extends React.Component {
   componentDidMount() {
+    // debugger;
     let userId = this.props.router.params.id;
     if (!userId) {
-      userId = 29516;
+      userId = this.props.authorizedUserId;
     }
     this.props.getProfile(userId);
     this.props.getStatus(userId);
@@ -35,7 +36,9 @@ export class ProfileInfoAPIContainer extends React.Component {
 const mapStateToProps = (state) => ({
   profile: state.profilePage.profile,
   isFetching: state.profilePage.isFetching,
-  status: state.profilePage.status
+  status: state.profilePage.status,
+  authorizedUserId: state.auth.id,
+  isAuth: state.auth.isAuth,
 });
 const mapDispatchToProps = {getProfile, getStatus, updateStatus};
 
