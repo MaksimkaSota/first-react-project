@@ -39,6 +39,7 @@ export const getAuthUserData = () => {
     if (data.resultCode === 0) {
       dispatch(setAuthUserData(data.data));
     }
+    return data;
   }
 };
 

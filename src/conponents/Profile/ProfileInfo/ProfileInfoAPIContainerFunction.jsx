@@ -1,23 +1,39 @@
 import React, { useEffect } from 'react';
 import { Preloader } from '../../common/Preloader/Preloader';
 import { ProfileInfo } from './ProfileInfo';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-export const ProfileInfoAPIContainerFunction = ({profile, isFetching, getProfile, authorizedUserId}) => {
+export const ProfileInfoAPIContainerFunction = ({
+                                                  profile,
+                                                  getProfile,
+                                                  authorizedUserId,
+                                                  getStatus,
+                                                  status,
+                                                  updateStatus
+                                                }) => {
   let {id} = useParams();
-  if (!id) {
-    id = authorizedUserId;
-  }
+  const navigate = useNavigate();
+
   useEffect(() => {
-    getProfile(id);
+    if (!id) {
+      id = authorizedUserId;
+      if (!id) {
+        navigate('/login');
+      }
+    }
+
+    if (id) {
+      getProfile(id);
+      getStatus(id);
+    }
   }, []);
 
   return (
     <>
       {
-        isFetching ?
+        !profile ?
           <Preloader /> :
-          <ProfileInfo profile={profile} />
+          <ProfileInfo profile={profile} status={status} updateStatus={updateStatus} />
       }
     </>
   );

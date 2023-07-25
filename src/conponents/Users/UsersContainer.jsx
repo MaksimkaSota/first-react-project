@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { follow, getUsers, unfollow } from '../../redux/users-reducer';
 import { Users } from './Users';
 import { Preloader } from '../common/Preloader/Preloader';
-import { WithAuthRedirect } from '../../hoc/withAuthRedirect';
-import { Dialogs } from '../Dialogs/Dialogs';
 import { compose } from 'redux';
 // import { UsersAPIContainerFunction } from './UsersAPIContainerFunction';
 
@@ -29,7 +27,7 @@ export class UsersAPIContainer extends React.Component {
     return (
       <>
         {
-          this.props.isFetching ?
+          !this.props.users.length ?
             <Preloader /> :
             <Users
               users={this.props.users}
@@ -53,12 +51,10 @@ const mapStateToProps = (state) => ({
   page: state.usersPage.page,
   count: state.usersPage.count,
   totalCount: state.usersPage.totalCount,
-  isFetching: state.usersPage.isFetching,
   subscriptionsId: state.usersPage.subscriptionsId
 });
 const mapDispatchToProps = {follow, unfollow, getUsers};
 
 export const UsersContainer = compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  WithAuthRedirect,
+  connect(mapStateToProps, mapDispatchToProps)
 )(UsersAPIContainer);

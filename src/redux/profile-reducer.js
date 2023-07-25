@@ -2,7 +2,6 @@ import { getProfileAPI, getStatusAPI, updateStatusAPI } from '../api/profileAPI'
 
 const ADD_POST_IN_STATE = 'ADD-POST-IN-STATE';
 const SET_PROFILE = 'SET-PROFILE';
-const SET_IS_FETCHING = 'SET-IS-FETCHING'
 const SET_STATUS = 'SET-STATUS';
 
 const initialState = {
@@ -13,7 +12,6 @@ const initialState = {
     {id: 4, message: 'Dada', numberOfLike: 20},
   ],
   profile: null,
-  isFetching: true,
   status: ''
 };
 
@@ -39,11 +37,6 @@ export const profileReducer = (state = initialState, action) => {
         ...state,
         status: action.payload
       };
-    case SET_IS_FETCHING:
-      return {
-        ...state,
-        isFetching: action.payload
-      }
     default:
       return state;
   }
@@ -52,16 +45,13 @@ export const profileReducer = (state = initialState, action) => {
 //ActionCreators
 export const addPost = (text) => ({type: ADD_POST_IN_STATE, payload: text});
 export const setProfile = (profile) => ({type: SET_PROFILE, payload: profile});
-export const setIsFetching = (isFetching) => ({type: SET_IS_FETCHING, payload: isFetching});
 export const setStatus = (status) => ({type: SET_STATUS, payload: status});
 
 //ThunkCreators
 export const getProfile = (userId) => {
   return async (dispatch) => {
-    dispatch(setIsFetching(true));
     const data = await getProfileAPI(userId);
     dispatch(setProfile(data));
-    dispatch(setIsFetching(false));
   }
 };
 

@@ -7,7 +7,6 @@ export const UsersAPIContainerFunction = ({
                                             page,
                                             count,
                                             totalCount,
-                                            isFetching,
                                             subscriptionsId,
                                             follow,
                                             unfollow,
@@ -30,7 +29,7 @@ export const UsersAPIContainerFunction = ({
   return (
     <>
       {
-        isFetching ?
+        !users.length ?
           <Preloader /> :
           <Users
             users={users}

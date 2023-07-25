@@ -7,11 +7,22 @@ import { Musics } from './conponents/Musics/Musics';
 import { DialogsContainer } from './conponents/Dialogs/DialogsContainer';
 import { UsersContainer } from './conponents/Users/UsersContainer';
 import { HeaderContainer } from './conponents/Header/HeaderContainer';
-import { Login } from './conponents/Login/Login';
-import { ProfileContainer } from './conponents/Profile/ProfileContainer';
 import { LoginContainer } from './conponents/Login/LoginContainer';
+import { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { initialize } from './redux/app-reduser';
+import { Preloader } from './conponents/common/Preloader/Preloader';
+import { Profile } from './conponents/Profile/Profile';
 
-export const App = () => {
+const App = ({initialized, initialize}) => {
+  useEffect(() => {
+    initialize();
+  }, []);
+
+  if (!initialized) {
+    return <Preloader />
+  }
+
   return (
     <div className="app-wrapper">
       <HeaderContainer />
@@ -19,7 +30,7 @@ export const App = () => {
       <div className="app-wrapper-content">
         <Routes>
           <Route path="/dialogs/*" element={<DialogsContainer />} />
-          <Route path="/profile/:id?" element={<ProfileContainer />} />
+          <Route path="/profile/:id?" element={<Profile />} />
           <Route path="/users" element={<UsersContainer />} />
           <Route path="/login" element={<LoginContainer />} />
           <Route path="/news" element={<News />} />
@@ -30,3 +41,10 @@ export const App = () => {
     </div>
   );
 }
+
+const mapStateToProps = (state) => ({
+  initialized: state.app.initialized,
+});
+const mapDispatchToProps = {initialize}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
