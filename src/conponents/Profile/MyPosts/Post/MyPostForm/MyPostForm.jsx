@@ -1,23 +1,18 @@
-import { Field, reduxForm } from 'redux-form';
-import { maxLengthCreator, requiredField } from '../../../../../utils/validators/validators';
-import { FormControl } from '../../../../common/FormsControls/FormsControls';
+import { ErrorMessage, Field, Form } from 'formik';
+import classes from './MyPostForm.module.css';
 
-const MyPostForm = ({handleSubmit}) => {
+export const MyPostForm = ({isSubmitting}) => {
   return (
-    <form onSubmit={handleSubmit}>
+    <Form>
       <div>
-        <Field placeholder={'Text'}
-               component={FormControl}
-               name={'text'}
-               validate={[requiredField, maxLengthCreator(10)]}
-               child={'textarea'}
+        <Field
+          name={'text'}
+          type={'textarea'}
+          placeholder={'Text'}
         />
       </div>
-      <div>
-        <button>Add post</button>
-      </div>
-    </form>
+      <ErrorMessage name="text" component="div" className={classes.error} />
+      <button type={'submit'} disabled={isSubmitting}>Add post</button>
+    </Form>
   );
 };
-
-export const MyPostReduxForm = reduxForm({form: 'myPost'})(MyPostForm);

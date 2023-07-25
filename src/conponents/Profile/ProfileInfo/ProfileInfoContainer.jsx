@@ -10,7 +10,6 @@ import { compose } from 'redux';
 //ContainerComponentInside (AJAX requests)
 export class ProfileInfoAPIContainer extends React.Component {
   componentDidMount() {
-    // debugger;
     let userId = this.props.router.params.id;
     if (!userId) {
       userId = this.props.authorizedUserId;

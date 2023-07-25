@@ -1,40 +1,41 @@
-import { Field, reduxForm } from 'redux-form';
-import { FormControl } from '../../common/FormsControls/FormsControls';
-import { requiredField } from '../../../utils/validators/validators';
+import { ErrorMessage, Field, Form } from 'formik';
 import classes from './LoginForm.module.css';
 
-const LoginForm = ({handleSubmit, error}) => {
+export const LoginForm = ({isSubmitting, status}) => {
   return (
-    <form onSubmit={handleSubmit}>
+    <Form>
       <div>
-        <Field placeholder={'Email'}
-               component={FormControl}
-               name={'email'}
-               validate={[requiredField]}
-               child={'input'}
+        <Field
+          name={'email'}
+          type={'email'}
+          placeholder={'Email'}
         />
       </div>
+      <ErrorMessage name="email" component="div" className={classes.error} />
       <div>
-        <Field placeholder={'Password'}
-               component={FormControl}
-               name={'password'}
-               validate={[requiredField]}
-               child={'input'}
-               type={'password'}
-               autoComplete="on"
+        <Field
+          name={'password'}
+          type={'password'}
+          placeholder={'Password'}
+          autoComplete="on"
         />
       </div>
+      <ErrorMessage name="password" component="div" className={classes.error} />
       <div>
-        <Field component={FormControl} name={'rememberMe'} type={'checkbox'} child={'input'} /> remember me
+        <Field
+          name={'rememberMe'}
+          type={'checkbox'}
+          id="rememberMe"
+        />
+        <label htmlFor={'rememberMe'}>remember me</label>
       </div>
-      {error && <div className={classes.formSummaryError}>
-        {error}
-      </div>}
-      <div>
-        <button>Login</button>
-      </div>
-    </form>
+      {
+        status &&
+        <div className={classes.formSummaryError}>
+          {status}
+        </div>
+      }
+      <button type={'submit'} disabled={isSubmitting}>Login</button>
+    </Form>
   );
 };
-
-export const LoginReduxForm = reduxForm({form: 'login'})(LoginForm);

@@ -1,24 +1,18 @@
-import { Field, reduxForm } from 'redux-form';
-import { FormControl } from '../../common/FormsControls/FormsControls';
-import { maxLengthCreator, requiredField } from '../../../utils/validators/validators';
+import { ErrorMessage, Field, Form } from 'formik';
+import classes from './DialogsForm.module.css';
 
-const DialogsForm = ({handleSubmit}) => {
+export const DialogsForm = ({isSubmitting}) => {
   return (
-    <form onSubmit={handleSubmit}>
+    <Form>
       <div>
-        <Field placeholder={'Text'}
-               component={FormControl}
-               name={'text'}
-               validate={[requiredField, maxLengthCreator(50)]}
-               child={'textarea'}
+        <Field
+          name={'text'}
+          type={'textarea'}
+          placeholder={'Text'}
         />
       </div>
-      <div>
-        <button>Add message</button>
-      </div>
-    </form>
+      <ErrorMessage name="text" component="div" className={classes.error} />
+      <button type={'submit'} disabled={isSubmitting}>Add message</button>
+    </Form>
   );
 };
-
-export const DialogsReduxForm = reduxForm({form: 'dialogs'})(DialogsForm);
-
