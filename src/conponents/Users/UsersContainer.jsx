@@ -4,6 +4,12 @@ import { follow, getUsers, unfollow } from '../../redux/users-reducer';
 import { Users } from './Users';
 import { Preloader } from '../common/Preloader/Preloader';
 import { compose } from 'redux';
+import {
+  getCountSelector,
+  getPageSelector, getSubscriptionsIdSelector,
+  getTotalCountSelector,
+  getUsersSelector, getUsersSuperSelector
+} from '../../redux/users-selectors';
 // import { UsersAPIContainerFunction } from './UsersAPIContainerFunction';
 
 //ContainerComponentInside (AJAX requests)
@@ -46,12 +52,19 @@ export class UsersAPIContainer extends React.Component {
 }
 
 //ContainerComponentOutside (communicates with the store)
+// const mapStateToProps = (state) => ({
+//   users: state.usersPage.users,
+//   page: state.usersPage.page,
+//   count: state.usersPage.count,
+//   totalCount: state.usersPage.totalCount,
+//   subscriptionsId: state.usersPage.subscriptionsId
+// });
 const mapStateToProps = (state) => ({
-  users: state.usersPage.users,
-  page: state.usersPage.page,
-  count: state.usersPage.count,
-  totalCount: state.usersPage.totalCount,
-  subscriptionsId: state.usersPage.subscriptionsId
+  users: getUsersSuperSelector(state),
+  page: getPageSelector(state),
+  count: getCountSelector(state),
+  totalCount: getTotalCountSelector(state),
+  subscriptionsId: getSubscriptionsIdSelector(state)
 });
 const mapDispatchToProps = {follow, unfollow, getUsers};
 
