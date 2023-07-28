@@ -1,3 +1,4 @@
+import React from 'react';
 import classes from './ProfileInfo.module.css';
 import userPhoto from '../../../assets/images/user.png';
 import { ProfileStatus } from './ProfileStatus/ProfileStatus'
@@ -15,7 +16,17 @@ export const ProfileInfo = ({profile, status, updateStatus}) => {
           alt="avatar"
         />
         <ProfileStatus status={status} updateStatus={updateStatus} />
+        <Test />
       </div>
     </div>
   );
 };
+
+const Test = React.memo(() => {
+  console.log('render');
+  return (
+    <div>
+      TEST
+    </div>
+  );
+});
