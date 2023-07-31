@@ -3,6 +3,7 @@ import { getProfileAPI, getStatusAPI, updateStatusAPI } from '../api/profileAPI'
 const ADD_POST_IN_STATE = 'ADD-POST-IN-STATE';
 const SET_PROFILE = 'SET-PROFILE';
 const SET_STATUS = 'SET-STATUS';
+const DELETE_POST = 'DELETE-POST';
 
 const initialState = {
   posts: [
@@ -32,6 +33,11 @@ export const profileReducer = (state = initialState, action) => {
         ...state,
         profile: action.payload
       };
+    case DELETE_POST:
+      return {
+        ...state,
+        posts: state.posts.filter((post) => post.id !== action.payload)
+      };
     case SET_STATUS:
       return {
         ...state,
@@ -46,6 +52,8 @@ export const profileReducer = (state = initialState, action) => {
 export const addPost = (text) => ({type: ADD_POST_IN_STATE, payload: text});
 export const setProfile = (profile) => ({type: SET_PROFILE, payload: profile});
 export const setStatus = (status) => ({type: SET_STATUS, payload: status});
+export const deletePost = (postId) => ({type: DELETE_POST, payload: postId});
+
 
 //ThunkCreators
 export const getProfile = (userId) => {
