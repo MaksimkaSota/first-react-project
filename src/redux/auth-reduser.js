@@ -1,7 +1,7 @@
 import { getAuthAPI, loginAPI, logoutAPI } from '../api/authAPI';
 
-const SET_AUTH_USER_DATA = 'SET-AUTH-USER-DATA';
-const RESET_AUTH_USER_DATA = 'RESET-AUTH-USER-DATA'
+const SET_AUTH_USER_DATA = 'first-react-project/auth/SET-AUTH-USER-DATA';
+const RESET_AUTH_USER_DATA = 'first-react-project/auth/RESET-AUTH-USER-DATA';
 
 const initialState = {
   id: null,

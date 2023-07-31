@@ -6,7 +6,6 @@ import { usersReducer } from './users-reducer';
 import { authReducer } from './auth-reduser';
 import { appReducer } from './app-reduser';
 
-
 const rootReducer = combineReducers({
   profilePage: profileReducer,
   dialogsPage: dialogsReducer,

@@ -1,11 +1,12 @@
 import { followAPI, getUsersAPI, unfollowAPI } from '../api/usersAPI';
+import { updateObjectInArray } from '../utilits/helpers/objects-helpers';
 
-const FOLLOW_SUCCESS = 'FOLLOW-SUCCESS';
-const UNFOLLOW_SUCCESS = 'UNFOLLOW-SUCCESS';
-const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
-const SET_USERS = 'SET-USERS';
-const SET_TOTAL_COUNT = 'GET-TOTAL-COUNT';
-const SET_SUBSCRIPTIONS_ID = 'SET-SUBSCRIPTIONS-ID';
+const FOLLOW_SUCCESS = 'first-react-project/users/FOLLOW-SUCCESS';
+const UNFOLLOW_SUCCESS = 'first-react-project/users/UNFOLLOW-SUCCESS';
+const SET_CURRENT_PAGE = 'first-react-project/users/SET-CURRENT-PAGE';
+const SET_USERS = 'first-react-project/users/SET-USERS';
+const SET_TOTAL_COUNT = 'first-react-project/users/GET-TOTAL-COUNT';
+const SET_SUBSCRIPTIONS_ID = 'first-react-project/users/SET-SUBSCRIPTIONS-ID';
 
 const initialState = {
   users: [],
@@ -20,28 +21,12 @@ export const usersReducer = (state = initialState, action) => {
     case FOLLOW_SUCCESS:
       return {
         ...state,
-        users: state.users.map((user) => {
-          if (user.id === action.payload) {
-            return {
-              ...user,
-              followed: true
-            }
-          }
-          return user;
-        })
+        users: updateObjectInArray(state.users, action.payload, 'id', {followed: true})
       }
     case UNFOLLOW_SUCCESS:
       return {
         ...state,
-        users: state.users.map((user) => {
-          if (user.id === action.payload) {
-            return {
-              ...user,
-              followed: false
-            }
-          }
-          return user;
-        })
+        users: updateObjectInArray(state.users, action.payload, 'id', {followed: false})
       }
     case SET_CURRENT_PAGE:
       return {
@@ -91,23 +76,22 @@ export const getUsers = (page, count) => {
     dispatch(setTotalCount(data.totalCount));
   }
 };
+
+const followUnfollowFlow = async (dispatch, id, apiMethod, actionCreator) => {
+  dispatch(setSubscriptionsId(id, true));
+  const data = await apiMethod(id);
+  if (data.resultCode === 0) {
+    dispatch(actionCreator(id));
+  }
+  dispatch(setSubscriptionsId(id, false));
+}
 export const follow = (id) => {
   return async (dispatch) => {
-    dispatch(setSubscriptionsId(id, true));
-    const data = await followAPI(id);
-    if (data.resultCode === 0) {
-      dispatch(followSuccess(id));
-    }
-    dispatch(setSubscriptionsId(id, false));
+    await followUnfollowFlow(dispatch, id, followAPI, followSuccess);
   }
 };
 export const unfollow = (id) => {
   return async (dispatch) => {
-    dispatch(setSubscriptionsId(id, true));
-    const data = await unfollowAPI(id);
-    if (data.resultCode === 0) {
-      dispatch(unfollowSuccess(id));
-    }
-    dispatch(setSubscriptionsId(id, false));
+    await followUnfollowFlow(dispatch, id, unfollowAPI, unfollowSuccess);
   }
 };

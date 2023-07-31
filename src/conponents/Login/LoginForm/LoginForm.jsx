@@ -1,34 +1,15 @@
-import { ErrorMessage, Field, Form } from 'formik';
+import { ErrorMessage, Form } from 'formik';
 import classes from './LoginForm.module.css';
+import { createField } from '../../../utilits/helpers/form-heplers';
 
 export const LoginForm = ({isSubmitting, status}) => {
   return (
     <Form>
-      <div>
-        <Field
-          name={'email'}
-          type={'email'}
-          placeholder={'Email'}
-        />
-      </div>
+      {createField('email', 'email', 'Email')}
       <ErrorMessage name="email" component="div" className={classes.error} />
-      <div>
-        <Field
-          name={'password'}
-          type={'password'}
-          placeholder={'Password'}
-          autoComplete="on"
-        />
-      </div>
+      {createField('password', 'password', 'Password', {autoComplete: 'on'})}
       <ErrorMessage name="password" component="div" className={classes.error} />
-      <div>
-        <Field
-          name={'rememberMe'}
-          type={'checkbox'}
-          id="rememberMe"
-        />
-        <label htmlFor={'rememberMe'}>remember me</label>
-      </div>
+      {createField('rememberMe', 'checkbox', null, {id: 'rememberMe'}, 'remember me')}
       {
         status &&
         <div className={classes.formSummaryError}>

@@ -1,9 +1,9 @@
 import { getProfileAPI, getStatusAPI, updateStatusAPI } from '../api/profileAPI';
 
-const ADD_POST_IN_STATE = 'ADD-POST-IN-STATE';
-const SET_PROFILE = 'SET-PROFILE';
-const SET_STATUS = 'SET-STATUS';
-const DELETE_POST = 'DELETE-POST';
+const ADD_POST_IN_STATE = 'first-react-project/profile/ADD-POST-IN-STATE';
+const SET_PROFILE = 'first-react-project/profile/SET-PROFILE';
+const SET_STATUS = 'first-react-project/profile/SET-STATUS';
+const DELETE_POST = 'first-react-project/profile/DELETE-POST';
 
 const initialState = {
   posts: [

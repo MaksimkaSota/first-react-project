@@ -1,4 +1,4 @@
-const ADD_MESSAGE_IN_STATE = 'ADD-MESSAGE-IN-STATE';
+const ADD_MESSAGE_IN_STATE = 'first-react-project/dialogs/ADD-MESSAGE-IN-STATE';
 
 const initialState = {
   dialogs: [

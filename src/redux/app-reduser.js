@@ -1,7 +1,6 @@
-import { getAuthAPI, loginAPI, logoutAPI } from '../api/authAPI';
 import { getAuthUserData } from './auth-reduser';
 
-const INITIALIZED_SUCCESS = 'INITIALIZED_SUCCESS';
+const INITIALIZED_SUCCESS = 'first-react-project/app/INITIALIZED_SUCCESS';
 
 const initialState = {
   initialized: false,

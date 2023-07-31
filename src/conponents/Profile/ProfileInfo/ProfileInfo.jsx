@@ -12,7 +12,7 @@ export const ProfileInfo = ({profile, status, updateStatus}) => {
         <div>{profile.lookingForAJobDescription}</div>
         <img
           className={classes.userPhoto}
-          src={profile.photos.large ? profile.photos.large : userPhoto}
+          src={profile.photos.large || userPhoto}
           alt="avatar"
         />
         <ProfileStatus status={status} updateStatus={updateStatus} />

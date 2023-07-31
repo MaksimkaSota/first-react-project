@@ -1,6 +1,5 @@
-import classes from './Users.module.css';
-import userPhoto from '../../assets/images/user.png';
-import { NavLink } from 'react-router-dom';
+import { Paginator } from '../common/Paginator/Paginator';
+import { User } from './User/User';
 
 export const Users = ({
                         users,
@@ -12,76 +11,17 @@ export const Users = ({
                         onUnfollow,
                         onSetCurrentPage
                       }) => {
-  const pagesCount = Math.ceil(totalCount / count);
-  const pages = [];
-  for (let i = 1; i <= pagesCount; i++) {
-    pages.push(i);
-  }
-
-  let slicedPages;
-  let curPage = page;
-  if (curPage - 3 < 0) {
-    slicedPages = pages.slice(0, 5);
-  } else {
-    slicedPages = pages.slice(curPage - 3, curPage + 2);
-  }
-
   return (
     <div>
+      <Paginator page={page} count={count} totalCount={totalCount} onSetCurrentPage={onSetCurrentPage} />
       <div>
-        {slicedPages.map((slicedPage, index) => {
-          return (
-            <span
-              className={slicedPage === page ? classes.selectedPage : ''}
-              key={index}
-              onClick={onSetCurrentPage(slicedPage)}>
-              {slicedPage}
-            </span>
-          )
-        })}
+        {users.map((user, index) => <User key={index}
+                                          user={user}
+                                          subscriptionsId={subscriptionsId}
+                                          onFollow={onFollow}
+                                          onUnfollow={onUnfollow} />
+        )}
       </div>
-      {users.map((user, index) => {
-        return (
-          <div key={index}>
-            <div>
-              <div>
-                <NavLink to={`/profile/${user.id}`}>
-                  <img
-                    className={classes.userPhoto}
-                    src={user.photos.small || userPhoto}
-                    alt="avatar"
-                  />
-                </NavLink>
-              </div>
-              <div>
-                {
-                  user.followed ?
-                    <button
-                      disabled={subscriptionsId.includes(user.id)}
-                      onClick={onUnfollow(user.id)}>
-                      Unfollow
-                    </button> :
-                    <button
-                      disabled={subscriptionsId.includes(user.id)}
-                      onClick={onFollow(user.id)}>
-                      Follow
-                    </button>
-                }
-              </div>
-            </div>
-            <div>
-              <div>
-                <div>{user.name}</div>
-                <div>{user.status}</div>
-              </div>
-              <div>
-                <div>{'user.location.city'}</div>
-                <div>{'user.location.country'}</div>
-              </div>
-            </div>
-          </div>
-        )
-      })}
     </div>
   );
 };
