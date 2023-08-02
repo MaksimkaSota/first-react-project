@@ -1,5 +1,5 @@
 import classes from './Paginator.module.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 export const Paginator = ({currentPage, pageSize, totalCount, onSetCurrentPage, portionSize = 10}) => {
@@ -22,6 +22,10 @@ export const Paginator = ({currentPage, pageSize, totalCount, onSetCurrentPage, 
   const onClickNextButton = () => {
     setCurrentPortionNumber(currentPortionNumber + 1);
   };
+
+  useEffect(() => {
+    setCurrentPortionNumber(Math.ceil(currentPage/portionSize))
+  }, [currentPage]);
 
   return (
     <div className={classes.paginator}>
