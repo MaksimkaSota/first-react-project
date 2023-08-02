@@ -1,33 +1,46 @@
 import classes from './Paginator.module.css';
+import { useState } from 'react';
+import classNames from 'classnames';
 
-export const Paginator = ({page, count, totalCount, onSetCurrentPage}) => {
+export const Paginator = ({currentPage, pageSize, totalCount, onSetCurrentPage, portionSize = 10}) => {
 
-  const pagesCount = Math.ceil(totalCount / count);
+  const pagesCount = Math.ceil(totalCount / pageSize);
   const pages = [];
   for (let i = 1; i <= pagesCount; i++) {
     pages.push(i);
   }
 
-  let slicedPages;
-  let curPage = page;
-  if (curPage - 3 < 0) {
-    slicedPages = pages.slice(0, 5);
-  } else {
-    slicedPages = pages.slice(curPage - 3, curPage + 2);
-  }
+  const portionCount = Math.ceil(pagesCount / portionSize);
+  const [currentPortionNumber, setCurrentPortionNumber] = useState(1);
+  const leftPortionPageNumber = (currentPortionNumber - 1) * portionSize + 1;
+  const rightPortionPageNumber = currentPortionNumber * portionSize;
+
+  const onClickPrevButton = () => {
+    setCurrentPortionNumber(currentPortionNumber - 1);
+  };
+
+  const onClickNextButton = () => {
+    setCurrentPortionNumber(currentPortionNumber + 1);
+  };
 
   return (
-    <div>
-      {slicedPages.map((slicedPage, index) => {
-        return (
-          <span
-            className={slicedPage === page ? classes.selectedPage : ''}
-            key={index}
-            onClick={onSetCurrentPage(slicedPage)}>
-              {slicedPage}
-            </span>
-        )
-      })}
+    <div className={classes.paginator}>
+      {currentPortionNumber > 1 && <button onClick={onClickPrevButton}>Prev</button>}
+      {
+        pages
+          .filter((page) => page >= leftPortionPageNumber && page <= rightPortionPageNumber)
+          .map((page, index) => {
+            return (
+              <span
+                className={classNames({[classes.selectedPage]: page === currentPage}, classes.pageNumber)}
+                key={index}
+                onClick={onSetCurrentPage(page)}>
+                {page}
+              </span>
+            )
+          })
+      }
+      {portionCount > currentPortionNumber && <button onClick={onClickNextButton}>Next</button>}
     </div>
   )
 };

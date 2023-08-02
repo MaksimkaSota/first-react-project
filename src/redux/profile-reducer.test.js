@@ -9,38 +9,40 @@ const state = {
   ]
 };
 
-// test
-it('length of posts should be incremented', () => {
-  // 1. test data
-  const action = addPost('new post');
-  // 2. action
-  const newState = profileReducer(state, action);
-  // 3. expectation
-  expect(newState.posts.length).toBe(5);
-});
-it('message of new posts should be correct', () => {
-  // 1. test data
-  const action = addPost('new post');
-  // 2. action
-  const newState = profileReducer(state, action);
-  // 3. expectation
-  expect(newState.posts[4].message).toBe('new post');
-});
+describe('Profile reducer tests', () => {
+  // test
+  it('length of posts should be incremented', () => {
+    // 1. test data
+    const action = addPost('new post');
+    // 2. action
+    const newState = profileReducer(state, action);
+    // 3. expectation
+    expect(newState.posts.length).toBe(5);
+  });
+  it('message of new posts should be correct', () => {
+    // 1. test data
+    const action = addPost('new post');
+    // 2. action
+    const newState = profileReducer(state, action);
+    // 3. expectation
+    expect(newState.posts[4].message).toBe('new post');
+  });
 
-//tdd test
-it('after deleting length of posts should be decrement', () => {
-  // 1. test data
-  const action = deletePost(1);
-  // 2. action
-  const newState = profileReducer(state, action);
-  // 3. expectation
-  expect(newState.posts.length).toBe(3);
-});
-it('after deleting length should not be decrement if id is incorrect', () => {
-  // 1. test data
-  const action = deletePost(1000);
-  // 2. action
-  const newState = profileReducer(state, action);
-  // 3. expectation
-  expect(newState.posts.length).toBe(4);
+  //tdd test
+  it('after deleting length of posts should be decrement', () => {
+    // 1. test data
+    const action = deletePost(1);
+    // 2. action
+    const newState = profileReducer(state, action);
+    // 3. expectation
+    expect(newState.posts.length).toBe(3);
+  });
+  it('after deleting length should not be decrement if id is incorrect', () => {
+    // 1. test data
+    const action = deletePost(1000);
+    // 2. action
+    const newState = profileReducer(state, action);
+    // 3. expectation
+    expect(newState.posts.length).toBe(4);
+  });
 });

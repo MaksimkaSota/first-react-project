@@ -2,7 +2,7 @@ import { act, create } from 'react-test-renderer'
 import { ProfileStatus } from './ProfileStatus';
 // import { ProfileStatusFunction } from './ProfileStatusFunction';
 
-describe('ProfileStatus component', () => {
+describe('ProfileStatus component tests', () => {
   // for class component (1)
   it('status from props should be in the state', () => {
     const component = create(<ProfileStatus status="max" />);

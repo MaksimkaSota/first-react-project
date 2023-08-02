@@ -13,7 +13,7 @@ export const Users = ({
                       }) => {
   return (
     <div>
-      <Paginator page={page} count={count} totalCount={totalCount} onSetCurrentPage={onSetCurrentPage} />
+      <Paginator currentPage={page} pageSize={count} totalCount={totalCount} onSetCurrentPage={onSetCurrentPage} />
       <div>
         {users.map((user, index) => <User key={index}
                                           user={user}
