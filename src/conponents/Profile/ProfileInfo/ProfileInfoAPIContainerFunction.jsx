@@ -26,7 +26,7 @@ export const ProfileInfoAPIContainerFunction = ({
       getProfile(id);
       getStatus(id);
     }
-  }, []);
+  }, [id]);
 
   return (
     <>

@@ -9,7 +9,7 @@ import { compose } from 'redux';
 
 //ContainerComponentInside (AJAX requests)
 export class ProfileInfoAPIContainer extends React.Component {
-  componentDidMount() {
+  refreshProfile() {
     let userId = this.props.router.params.id;
     if (!userId) {
       userId = this.props.authorizedUserId;
@@ -21,6 +21,16 @@ export class ProfileInfoAPIContainer extends React.Component {
     if (userId) {
       this.props.getProfile(userId);
       this.props.getStatus(userId);
+    }
+  }
+
+  componentDidMount() {
+    this.refreshProfile();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.router.params.id !== this.props.router.params.id) {
+      this.refreshProfile();
     }
   }
 
