@@ -1,6 +1,6 @@
 import './App.css';
 import { Navbar } from './conponents/Navbar/Navbar';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
 import { News } from './conponents/News/News';
 import { Settings } from './conponents/Settings/Settings';
 import { Musics } from './conponents/Musics/Musics';
@@ -63,9 +63,9 @@ const AppContainer = connect(mapStateToProps, mapDispatchToProps)(App);
 export const MainApp = () => {
   return (
     <Provider store={store}>
-      <BrowserRouter>
+      <HashRouter basename='/'>
         <AppContainer />
-      </BrowserRouter>
+      </HashRouter>
     </Provider>
   )
 }

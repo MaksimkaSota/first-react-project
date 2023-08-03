@@ -2,6 +2,7 @@
   "name": "first-react-project",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://maksimkasota.github.io/first-react-project/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -14,7 +15,6 @@
     "react-redux": "^8.1.1",
     "react-router-dom": "^6.14.0",
     "react-scripts": "5.0.1",
-    "react-test-renderer": "^18.2.0",
     "redux": "^4.2.1",
     "redux-thunk": "^2.4.2",
     "reselect": "^4.1.8",
@@ -22,6 +22,8 @@
     "yup": "^1.2.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -49,5 +51,9 @@
     "transformIgnorePatterns": [
       "node_modules/(?!axios)/"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^5.0.0",
+    "react-test-renderer": "^18.2.0"
   }
 }
