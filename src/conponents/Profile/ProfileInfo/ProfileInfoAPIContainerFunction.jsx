@@ -9,7 +9,8 @@ export const ProfileInfoAPIContainerFunction = ({
                                                   authorizedUserId,
                                                   getStatus,
                                                   status,
-                                                  updateStatus
+                                                  updateStatus,
+                                                  savePhoto
                                                 }) => {
   let {id} = useParams();
   const navigate = useNavigate();
@@ -33,7 +34,13 @@ export const ProfileInfoAPIContainerFunction = ({
       {
         !profile ?
           <Preloader /> :
-          <ProfileInfo profile={profile} status={status} updateStatus={updateStatus} />
+          <ProfileInfo
+            profile={profile}
+            status={status}
+            updateStatus={updateStatus}
+            isOwner={!id}
+            savePhoto={savePhoto}
+          />
       }
     </>
   );

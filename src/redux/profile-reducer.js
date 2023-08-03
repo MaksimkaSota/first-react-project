@@ -1,9 +1,10 @@
-import { getProfileAPI, getStatusAPI, updateStatusAPI } from '../api/profileAPI';
+import { getProfileAPI, getStatusAPI, savePhotoAPI, updateStatusAPI } from '../api/profileAPI';
 
 const ADD_POST_IN_STATE = 'first-react-project/profile/ADD-POST-IN-STATE';
 const SET_PROFILE = 'first-react-project/profile/SET-PROFILE';
 const SET_STATUS = 'first-react-project/profile/SET-STATUS';
 const DELETE_POST = 'first-react-project/profile/DELETE-POST';
+const SAVE_PHOTO_SUCCESS = 'first-react-project/profile/SAVE-PHOTO-SUCCESS';
 
 const initialState = {
   posts: [
@@ -43,6 +44,14 @@ export const profileReducer = (state = initialState, action) => {
         ...state,
         status: action.payload
       };
+    case SAVE_PHOTO_SUCCESS:
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          photos: action.payload
+        }
+      };
     default:
       return state;
   }
@@ -53,6 +62,7 @@ export const addPost = (text) => ({type: ADD_POST_IN_STATE, payload: text});
 export const setProfile = (profile) => ({type: SET_PROFILE, payload: profile});
 export const setStatus = (status) => ({type: SET_STATUS, payload: status});
 export const deletePost = (postId) => ({type: DELETE_POST, payload: postId});
+export const savePhotoSuccess = (photos) => ({type: SAVE_PHOTO_SUCCESS, payload: photos});
 
 
 //ThunkCreators
@@ -78,3 +88,12 @@ export const updateStatus = (status) => {
     }
   }
 };
+
+export const savePhoto = (file) => {
+  return async (dispatch) => {
+    const data = await savePhotoAPI(file);
+    if (data.resultCode === 0) {
+      dispatch(savePhotoSuccess(data.data.photos));
+    }
+  }
+}

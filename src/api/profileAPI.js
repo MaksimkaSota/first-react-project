@@ -15,3 +15,14 @@ export const updateStatusAPI = async (myStatus) => {
   return await response.data;
 };
 
+export const savePhotoAPI = async (photoFile) => {
+  const formData = new FormData();
+  formData.append('image', photoFile);
+  const response = await http.put(`profile/photo`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+  return await response.data;
+};
+
