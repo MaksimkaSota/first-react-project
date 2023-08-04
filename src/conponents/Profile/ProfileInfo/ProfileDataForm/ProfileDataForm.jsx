@@ -1,8 +1,14 @@
-import { ErrorMessage, Form } from 'formik';
+import { ErrorMessage, Field, Form, useFormikContext } from 'formik';
 import { CreateField, createField } from '../../../../utilits/helpers/form-heplers';
 import classes from '../../../Dialogs/DialogsForm/DialogsForm.module.css';
 
-export const ProfileDataForm = ({profile, isSubmitting, onChangeEditMode, editModeSkills, values}) => {
+export const ProfileDataForm = ({isSubmitting, setFieldValue, editModeSkills, setEditModeSkills}) => {
+
+  const onChangeEditMode = (event) => {
+    setFieldValue('lookingForAJob', event.target.checked)
+    event.target.checked ? setEditModeSkills(true) : setEditModeSkills(false);
+  };
+
   return (
     <Form>
       <button type={'submit'} disabled={isSubmitting}>Save</button>
@@ -12,7 +18,7 @@ export const ProfileDataForm = ({profile, isSubmitting, onChangeEditMode, editMo
       </div>
       <div>
         <b>Looking for a job</b>:
-        <CreateField name={'lookingForAJob'} type={'checkbox'} props1={{id: 'rememberMe'}} text={'looking for a job'} callback={onChangeEditMode} values={values} />
+        <CreateField name={'lookingForAJob'} type={'checkbox'} props1={{id: 'rememberMe'}} text={'looking for a job'} callback={onChangeEditMode} />
       </div>
       {
         editModeSkills &&

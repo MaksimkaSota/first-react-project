@@ -1,7 +1,6 @@
 import { Field } from 'formik';
 
-export const CreateField = ({name, type, placeholder, props1 = {}, text = '', callback = () => {}, values}) => {
-  console.log(values);
+export const CreateField = ({name, type, placeholder, props1 = {}, text = '', callback = () => {}}) => {
   return (
     <div>
       <Field
@@ -9,7 +8,6 @@ export const CreateField = ({name, type, placeholder, props1 = {}, text = '', ca
         type={type}
         placeholder={placeholder}
         onChange={callback}
-        // onClick={callback}
         {...props1}
       />
       {text && <label htmlFor={props1.id}>{text}</label>}

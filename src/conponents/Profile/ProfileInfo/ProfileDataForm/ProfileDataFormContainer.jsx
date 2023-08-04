@@ -13,24 +13,12 @@ const validationSchemaDialogsForm = Yup.object().shape({
 
 export const ProfileDataFormContainer = ({profile}) => {
   const [editModeSkills, setEditModeSkills] = useState(false);
-  // const {setFieldValue} = useFormikContext();
 
   const submit = (formData, {setSubmitting, resetForm}) => {
     // addMessage(formData.text);
     // setSubmitting(false);
     // resetForm();
   }
-
-  // const onChangeEditMode = useCallback((event) => {
-  //   setFieldValue('lookingForAJob', event.target.checked)
-  //   // console.log(event.target.checked);
-  //   event.target.checked ? setEditModeSkills(true) : setEditModeSkills(false);
-  // }, [setFieldValue]);
-
-  const onChangeEditMode = (event) => {
-    console.log(event.target.checked);
-    event.target.checked ? setEditModeSkills(true) : setEditModeSkills(false);
-  };
 
   return (
     <Formik
@@ -42,13 +30,12 @@ export const ProfileDataFormContainer = ({profile}) => {
       validationSchema={validationSchemaDialogsForm}
       onSubmit={submit}
     >
-      {({values, isSubmitting}) => (
+      {({isSubmitting, setFieldValue}) => (
         <ProfileDataForm
-          profile={profile}
           isSubmitting={isSubmitting}
-          onChangeEditMode={onChangeEditMode}
+          setFieldValue={setFieldValue}
           editModeSkills={editModeSkills}
-          values={values}
+          setEditModeSkills={setEditModeSkills}
         />
       )}
     </Formik>
