@@ -39,10 +39,10 @@ export class ProfileStatus extends React.Component {
         {
           !this.state.editMode ?
             <div>
-              <span onDoubleClick={this.onActivateEditMode}>{this.props.status || 'no status'}</span>
+              <b>Status</b> <span onDoubleClick={this.onActivateEditMode}>{this.props.status || 'no status'}</span>
             </div> :
             <div>
-              <input onChange={this.onStatusChange} autoFocus={true} onBlur={this.onDeactivateEditMode} value={this.state.status} />
+              <b>Status</b> <input onChange={this.onStatusChange} autoFocus={true} onBlur={this.onDeactivateEditMode} value={this.state.status} />
             </div>
         }
       </div>
