@@ -21,8 +21,8 @@ export const MyPostFormContainer = ({addPost}) => {
       validationSchema={validationSchemaMyPostForm}
       onSubmit={submit}
     >
-      {({isSubmitting}) => (
-        <MyPostForm isSubmitting={isSubmitting} />
+      {({isSubmitting, handleChange}) => (
+        <MyPostForm isSubmitting={isSubmitting} handleChange={handleChange} />
       )}
     </Formik>
   );

@@ -1,20 +1,17 @@
 import { ProfileDataForm } from './ProfileDataForm';
-import { Formik, useFormikContext } from 'formik';
-import { DialogsForm } from '../../../Dialogs/DialogsForm/DialogsForm';
-import * as Yup from 'yup';
-import { useCallback, useState } from 'react';
-import { createField } from '../../../../utilits/helpers/form-heplers';
+import { Formik } from 'formik';
+// import * as Yup from 'yup';
 
-const validationSchemaDialogsForm = Yup.object().shape({
-  text: Yup.string()
-    .max(50, 'Must be shorter than 50 characters')
-    .required('Required')
-});
+// const validationSchemaDialogsForm = Yup.object().shape({
+//   text: Yup.string()
+//     .max(50, 'Must be shorter than 50 characters')
+//     .required('Required')
+// });
 
-export const ProfileDataFormContainer = ({profile}) => {
-  const [editModeSkills, setEditModeSkills] = useState(false);
-
+export const ProfileDataFormContainer = () => {
   const submit = (formData, {setSubmitting, resetForm}) => {
+    console.log(formData);
+    setSubmitting(false);
     // addMessage(formData.text);
     // setSubmitting(false);
     // resetForm();
@@ -25,17 +22,17 @@ export const ProfileDataFormContainer = ({profile}) => {
       initialValues={{
         fullName: '',
         lookingForAJob: false,
-        myProfessionalSkills: ''
+        lookingForAJobDescription: '',
+        aboutMe: ''
       }}
-      validationSchema={validationSchemaDialogsForm}
+      // validationSchema={validationSchemaDialogsForm}
       onSubmit={submit}
     >
-      {({isSubmitting, setFieldValue}) => (
+      {({isSubmitting, setFieldValue, handleChange}) => (
         <ProfileDataForm
           isSubmitting={isSubmitting}
           setFieldValue={setFieldValue}
-          editModeSkills={editModeSkills}
-          setEditModeSkills={setEditModeSkills}
+          handleChange={handleChange}
         />
       )}
     </Formik>

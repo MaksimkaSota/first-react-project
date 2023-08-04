@@ -1,12 +1,13 @@
-import { ErrorMessage, Field, Form, useFormikContext } from 'formik';
-import { CreateField, createField } from '../../../../utilits/helpers/form-heplers';
-import classes from '../../../Dialogs/DialogsForm/DialogsForm.module.css';
+import { Form } from 'formik';
+import { FormField } from '../../../common/FormField/FormField';
+import { useState } from 'react';
 
-export const ProfileDataForm = ({isSubmitting, setFieldValue, editModeSkills, setEditModeSkills}) => {
+export const ProfileDataForm = ({isSubmitting, setFieldValue, handleChange}) => {
+  const [editModeSkills, setEditModeSkills] = useState(false);
 
-  const onChangeEditMode = (event) => {
-    setFieldValue('lookingForAJob', event.target.checked)
-    event.target.checked ? setEditModeSkills(true) : setEditModeSkills(false);
+  const onChangeEditModeSkills = (event) => {
+    setFieldValue('lookingForAJob', event.target.checked);
+    setEditModeSkills(event.target.checked);
   };
 
   return (
@@ -14,22 +15,44 @@ export const ProfileDataForm = ({isSubmitting, setFieldValue, editModeSkills, se
       <button type={'submit'} disabled={isSubmitting}>Save</button>
       <div>
         <b>Full name</b>:
-        {/*{createField('fullName', 'text', 'Full name')}*/}
+        <FormField
+          name={'fullName'}
+          type={'text'}
+          placeholder={'Full name'}
+          handleChange={handleChange}
+        />
       </div>
       <div>
         <b>Looking for a job</b>:
-        <CreateField name={'lookingForAJob'} type={'checkbox'} props1={{id: 'rememberMe'}} text={'looking for a job'} callback={onChangeEditMode} />
+        <FormField
+          name={'lookingForAJob'}
+          type={'checkbox'}
+          props={{id: 'rememberMe'}}
+          text={'looking for a job'}
+          callback={onChangeEditModeSkills}
+        />
       </div>
       {
         editModeSkills &&
         <div>
           <b>My professional skills</b>:
-          {/*{createField('myProfessionalSkills', 'textarea', 'My professional skills')}*/}
+          <FormField
+            name={'lookingForAJobDescription'}
+            type={'textarea'}
+            placeholder={'My professional skills'}
+            handleChange={handleChange}
+          />
         </div>
       }
-      {/*<div>*/}
-      {/*  <b>About me</b>: {profile.aboutMe}*/}
-      {/*</div>*/}
+      <div>
+        <b>About me</b>:
+        <FormField
+          name={'aboutMe'}
+          type={'textarea'}
+          placeholder={'About me'}
+          handleChange={handleChange}
+        />
+      </div>
       <div>
         <b>Contacts</b>:
         {

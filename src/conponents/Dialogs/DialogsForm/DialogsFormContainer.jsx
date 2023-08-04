@@ -21,8 +21,8 @@ export const DialogsFormContainer = ({addMessage}) => {
       validationSchema={validationSchemaDialogsForm}
       onSubmit={submit}
     >
-      {({isSubmitting}) => (
-        <DialogsForm isSubmitting={isSubmitting} />
+      {({isSubmitting, handleChange}) => (
+        <DialogsForm isSubmitting={isSubmitting} handleChange={handleChange} />
       )}
     </Formik>
   );

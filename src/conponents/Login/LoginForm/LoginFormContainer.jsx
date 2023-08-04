@@ -28,8 +28,8 @@ export const LoginFormContainer = ({login}) => {
       validationSchema={validationSchemaLoginForm}
       onSubmit={submit}
     >
-      {({isSubmitting, status}) => (
-        <LoginForm isSubmitting={isSubmitting} status={status} />
+      {({isSubmitting, status, handleChange}) => (
+        <LoginForm isSubmitting={isSubmitting} status={status} handleChange={handleChange} />
       )}
     </Formik>
   );
