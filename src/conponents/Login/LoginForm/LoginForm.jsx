@@ -9,7 +9,7 @@ export const LoginForm = ({isSubmitting, status, handleChange}) => {
         name={'email'}
         type={'email'}
         placeholder={'Email'}
-        handleChange={handleChange}
+        callback={handleChange}
       />
       <ErrorMessage name="email" component="div" className={classes.error} />
       <FormField
@@ -17,7 +17,7 @@ export const LoginForm = ({isSubmitting, status, handleChange}) => {
         type={'password'}
         placeholder={'Password'}
         props={{autoComplete: 'on'}}
-        handleChange={handleChange}
+        callback={handleChange}
       />
       <ErrorMessage name="password" component="div" className={classes.error} />
       <FormField
@@ -25,7 +25,7 @@ export const LoginForm = ({isSubmitting, status, handleChange}) => {
         type={'checkbox'}
         text={'remember me'}
         props={{id: 'rememberMe'}}
-        handleChange={handleChange}
+        callback={handleChange}
       />
       {
         status &&

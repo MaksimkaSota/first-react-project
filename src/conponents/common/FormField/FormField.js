@@ -6,8 +6,7 @@ export const FormField = ({
                               placeholder = '',
                               text = '',
                               props = {},
-                              callback,
-                              handleChange
+                              callback
                             }) => {
   return (
     <div>
@@ -15,7 +14,7 @@ export const FormField = ({
         name={name}
         type={type}
         placeholder={placeholder}
-        onChange={callback || handleChange}
+        onChange={callback}
         {...props}
       />
       {text && <label htmlFor={props.id}>{text}</label>}

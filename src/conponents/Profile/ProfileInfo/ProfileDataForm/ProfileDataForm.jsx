@@ -19,7 +19,7 @@ export const ProfileDataForm = ({isSubmitting, setFieldValue, handleChange}) => 
           name={'fullName'}
           type={'text'}
           placeholder={'Full name'}
-          handleChange={handleChange}
+          callback={handleChange}
         />
       </div>
       <div>
@@ -40,7 +40,7 @@ export const ProfileDataForm = ({isSubmitting, setFieldValue, handleChange}) => 
             name={'lookingForAJobDescription'}
             type={'textarea'}
             placeholder={'My professional skills'}
-            handleChange={handleChange}
+            callback={handleChange}
           />
         </div>
       }
@@ -50,7 +50,7 @@ export const ProfileDataForm = ({isSubmitting, setFieldValue, handleChange}) => 
           name={'aboutMe'}
           type={'textarea'}
           placeholder={'About me'}
-          handleChange={handleChange}
+          callback={handleChange}
         />
       </div>
       <div>
