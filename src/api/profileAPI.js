@@ -26,3 +26,7 @@ export const savePhotoAPI = async (photoFile) => {
   return await response.data;
 };
 
+export const saveProfileAPI = async (profile) => {
+  const response = await http.put(`profile`, profile);
+  return await response.data;
+};

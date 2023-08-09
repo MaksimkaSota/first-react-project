@@ -6,7 +6,7 @@ import { ProfileData } from './ProfileData/ProfileData';
 import { ProfileDataFormContainer } from './ProfileDataForm/ProfileDataFormContainer';
 // import { ProfileStatusFunction } from './ProfileStatus/ProfileStatusFunction';
 
-export const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto}) => {
+export const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto, saveProfile}) => {
   const [editMode, setEditMode] = useState(false);
 
   const onMainPhotoSelected = (event) => {
@@ -35,7 +35,7 @@ export const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto})
         }
         {
           editMode ?
-            <ProfileDataFormContainer profile={profile} /> :
+            <ProfileDataFormContainer profile={profile} saveProfile={saveProfile} setEditMode={setEditMode} /> :
             <ProfileData profile={profile} isOwner={isOwner} onChangeEditMode={onChangeEditMode}/>
         }
         <ProfileStatus status={status} updateStatus={updateStatus} />

@@ -1,4 +1,4 @@
-import { getProfileAPI, getStatusAPI, savePhotoAPI, updateStatusAPI } from '../api/profileAPI';
+import { getProfileAPI, getStatusAPI, savePhotoAPI, saveProfileAPI, updateStatusAPI } from '../api/profileAPI';
 
 const ADD_POST_IN_STATE = 'first-react-project/profile/ADD-POST-IN-STATE';
 const SET_PROFILE = 'first-react-project/profile/SET-PROFILE';
@@ -96,4 +96,40 @@ export const savePhoto = (file) => {
       dispatch(savePhotoSuccess(data.data.photos));
     }
   }
-}
+};
+
+export const saveProfile = (file, setStatus, setSubmitting, initialValue) => {
+  return async (dispatch, getState) => {
+    const userId = getState().auth.id;
+    const initialValuesKeys = Object.keys(initialValue);
+    const contactsKeys = Object.keys(initialValue.contacts);
+
+    const data = await saveProfileAPI(file);
+    if (data.resultCode === 0) {
+      dispatch(getProfile(userId));
+    } else {
+      const objectErrors = {
+        contacts: {}
+      };
+
+      data.messages.forEach((message) => {
+        initialValuesKeys.forEach((value) => {
+          if (value === 'contacts') {
+            contactsKeys.forEach((contact) => {
+              if (message.toLowerCase().includes(contact.toLowerCase())) {
+                objectErrors.contacts[contact] = message;
+              }
+            })
+          } else {
+            if (message.toLowerCase().includes(value.toLowerCase())) {
+              objectErrors[value] = message;
+            }
+          }
+        })
+      })
+
+      setStatus(objectErrors);
+    }
+    setSubmitting(false);
+  }
+};

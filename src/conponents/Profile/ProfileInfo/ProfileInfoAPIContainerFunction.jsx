@@ -10,7 +10,8 @@ export const ProfileInfoAPIContainerFunction = ({
                                                   getStatus,
                                                   status,
                                                   updateStatus,
-                                                  savePhoto
+                                                  savePhoto,
+                                                  saveProfile
                                                 }) => {
   let {id} = useParams();
   const navigate = useNavigate();
@@ -40,6 +41,7 @@ export const ProfileInfoAPIContainerFunction = ({
             updateStatus={updateStatus}
             isOwner={!id}
             savePhoto={savePhoto}
+            saveProfile={saveProfile}
           />
       }
     </>

@@ -1,0 +1,9 @@
+.formSummaryError {
+  border: red 1px solid;
+  padding: 5px;
+  color: darkred;
+}
+
+.contact {
+  padding-left: 10px;
+}

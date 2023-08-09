@@ -1,38 +1,42 @@
 import { ProfileDataForm } from './ProfileDataForm';
 import { Formik } from 'formik';
-// import * as Yup from 'yup';
 
-// const validationSchemaDialogsForm = Yup.object().shape({
-//   text: Yup.string()
-//     .max(50, 'Must be shorter than 50 characters')
-//     .required('Required')
-// });
+export const ProfileDataFormContainer = ({profile, saveProfile, setEditMode}) => {
+  const initialValue = {
+    lookingForAJob: profile.lookingForAJob || false,
+    lookingForAJobDescription: profile.lookingForAJobDescription || '',
+    fullName: profile.fullName || '',
+    aboutMe: profile.aboutMe || '',
+    contacts: {
+      github: profile.github || '',
+      vk: profile.vk || '',
+      facebook: profile.facebook || '',
+      instagram: profile.instagram || '',
+      twitter: profile.twitter || '',
+      website: profile.website || '',
+      youtube: profile.youtube || '',
+      mainLink: profile.mainLink || ''
+    }
+  }
 
-export const ProfileDataFormContainer = () => {
-  const submit = (formData, {setSubmitting, resetForm}) => {
-    console.log(formData);
-    setSubmitting(false);
-    // addMessage(formData.text);
-    // setSubmitting(false);
-    // resetForm();
+  const submit = (formData, {setStatus, setSubmitting}) => {
+    saveProfile(formData, setStatus, setSubmitting, initialValue);
+    setSubmitting(true);
+    // setEditMode(false);
   }
 
   return (
     <Formik
-      initialValues={{
-        fullName: '',
-        lookingForAJob: false,
-        lookingForAJobDescription: '',
-        aboutMe: ''
-      }}
-      // validationSchema={validationSchemaDialogsForm}
+      initialValues={initialValue}
       onSubmit={submit}
     >
-      {({isSubmitting, setFieldValue, handleChange}) => (
+      {({isSubmitting, status, handleChange, setFieldValue}) => (
         <ProfileDataForm
+          profile={profile}
           isSubmitting={isSubmitting}
-          setFieldValue={setFieldValue}
+          status={status}
           handleChange={handleChange}
+          setFieldValue={setFieldValue}
         />
       )}
     </Formik>

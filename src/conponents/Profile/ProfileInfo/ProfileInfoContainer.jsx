@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Preloader } from '../../common/Preloader/Preloader';
 import { ProfileInfo } from './ProfileInfo';
-import { getProfile, getStatus, savePhoto, updateStatus } from '../../../redux/profile-reducer';
+import { getProfile, getStatus, savePhoto, saveProfile, updateStatus } from '../../../redux/profile-reducer';
 import { withRouter } from '../../../withRouterFromReactRouterDomV5';
 import { compose } from 'redux';
 // import { ProfileInfoAPIContainerFunction } from './ProfileInfoAPIContainerFunction';
@@ -46,6 +46,7 @@ export class ProfileInfoAPIContainer extends React.Component {
               updateStatus={this.props.updateStatus}
               isOwner={!this.props.router.params.id}
               savePhoto={this.props.savePhoto}
+              saveProfile={this.props.saveProfile}
             />
         }
       </>
@@ -60,7 +61,7 @@ const mapStateToProps = (state) => ({
   authorizedUserId: state.auth.id,
   isAuth: state.auth.isAuth,
 });
-const mapDispatchToProps = {getProfile, getStatus, updateStatus, savePhoto};
+const mapDispatchToProps = {getProfile, getStatus, updateStatus, savePhoto, saveProfile};
 
 export const ProfileInfoContainer = compose(
   connect(mapStateToProps, mapDispatchToProps),
