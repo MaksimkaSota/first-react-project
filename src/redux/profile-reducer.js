@@ -129,6 +129,7 @@ export const saveProfile = (file, setStatus, setSubmitting, initialValue) => {
       })
 
       setStatus(objectErrors);
+      return Promise.reject(objectErrors);
     }
     setSubmitting(false);
   }

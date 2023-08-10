@@ -15,8 +15,7 @@ const validationSchemaLoginForm = Yup.object().shape({
 export const LoginFormContainer = ({login}) => {
   const submit = (formData, {setStatus, setSubmitting}) => {
     login(formData.email, formData.password, formData.rememberMe, setStatus, setSubmitting);
-    setSubmitting(true);
-  }
+  };
 
   return (
     <Formik

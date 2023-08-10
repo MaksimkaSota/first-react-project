@@ -10,10 +10,10 @@ const validationSchemaMyPostForm = Yup.object().shape({
 
 export const MyPostFormContainer = ({addPost}) => {
   const submit = (formData, {setSubmitting, resetForm}) => {
-    addPost(formData.text);
     setSubmitting(false);
+    addPost(formData.text);
     resetForm();
-  }
+  };
 
   return (
     <Formik

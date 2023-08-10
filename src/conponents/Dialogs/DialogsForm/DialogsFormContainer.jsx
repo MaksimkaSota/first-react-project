@@ -10,10 +10,10 @@ const validationSchemaDialogsForm = Yup.object().shape({
 
 export const DialogsFormContainer = ({addMessage}) => {
   const submit = (formData, {setSubmitting, resetForm}) => {
-    addMessage(formData.text);
     setSubmitting(false);
+    addMessage(formData.text);
     resetForm();
-  }
+  };
 
   return (
     <Formik

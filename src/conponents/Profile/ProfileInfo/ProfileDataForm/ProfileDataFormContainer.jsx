@@ -19,11 +19,14 @@ export const ProfileDataFormContainer = ({profile, saveProfile, setEditMode}) =>
     }
   }
 
-  const submit = (formData, {setStatus, setSubmitting}) => {
-    saveProfile(formData, setStatus, setSubmitting, initialValue);
-    setSubmitting(true);
-    // setEditMode(false);
-  }
+  const submit = async (formData, {setStatus, setSubmitting}) => {
+    try {
+      await saveProfile(formData, setStatus, setSubmitting, initialValue);
+      setEditMode(false);
+    } catch {
+      alert('Fix form errors');
+    }
+  };
 
   return (
     <Formik
