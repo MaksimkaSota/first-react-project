@@ -12,9 +12,9 @@ const validationSchemaLoginForm = Yup.object().shape({
     .required('Required password')
 });
 
-export const LoginFormContainer = ({login}) => {
+export const LoginFormContainer = ({login, captchaUrl}) => {
   const submit = (formData, {setStatus, setSubmitting}) => {
-    login(formData.email, formData.password, formData.rememberMe, setStatus, setSubmitting);
+    login(formData.email, formData.password, formData.rememberMe, formData.captcha, setStatus, setSubmitting);
   };
 
   return (
@@ -22,13 +22,14 @@ export const LoginFormContainer = ({login}) => {
       initialValues={{
         email: '',
         password: '',
-        rememberMe: false
+        rememberMe: false,
+        captcha: ''
       }}
       validationSchema={validationSchemaLoginForm}
       onSubmit={submit}
     >
       {({isSubmitting, status, handleChange}) => (
-        <LoginForm isSubmitting={isSubmitting} status={status} handleChange={handleChange} />
+        <LoginForm isSubmitting={isSubmitting} status={status} handleChange={handleChange} captchaUrl={captchaUrl} />
       )}
     </Formik>
   );

@@ -2,7 +2,7 @@ import { ErrorMessage, Form } from 'formik';
 import classes from './LoginForm.module.css';
 import { FormField } from '../../common/FormField/FormField';
 
-export const LoginForm = ({isSubmitting, status, handleChange}) => {
+export const LoginForm = ({isSubmitting, status, handleChange, captchaUrl}) => {
   return (
     <Form>
       <FormField
@@ -27,6 +27,18 @@ export const LoginForm = ({isSubmitting, status, handleChange}) => {
         props={{id: 'rememberMe'}}
         callback={handleChange}
       />
+      {
+        captchaUrl &&
+        <div>
+          <img src={captchaUrl} alt={'captcha'} />
+          <FormField
+            name={'captcha'}
+            type={'text'}
+            placeholder={'symbols from image'}
+            callback={handleChange}
+          />
+        </div>
+      }
       {
         status &&
         <div className={classes.formSummaryError}>

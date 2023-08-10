@@ -3,7 +3,8 @@ import { Login } from './Login';
 import { login } from '../../redux/auth-reduser';
 
 const mapStateToProps = (state) => ({
-  isAuth: state.auth.isAuth
+  isAuth: state.auth.isAuth,
+  captchaUrl: state.auth.captchaUrl
 })
 const mapDispatchToProps = {login}
 
