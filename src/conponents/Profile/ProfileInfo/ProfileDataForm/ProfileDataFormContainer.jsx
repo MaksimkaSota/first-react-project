@@ -19,13 +19,8 @@ export const ProfileDataFormContainer = ({profile, saveProfile, setEditMode}) =>
     }
   }
 
-  const submit = async (formData, {setStatus, setSubmitting}) => {
-    try {
-      await saveProfile(formData, setStatus, setSubmitting, initialValue);
-      setEditMode(false);
-    } catch {
-      alert('Fix form errors');
-    }
+  const submit = (formData, {setStatus, setSubmitting}) => {
+      saveProfile(formData, setStatus, setSubmitting, initialValue, setEditMode);
   };
 
   return (

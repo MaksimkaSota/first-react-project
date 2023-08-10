@@ -98,7 +98,7 @@ export const savePhoto = (file) => {
   }
 };
 
-export const saveProfile = (file, setStatus, setSubmitting, initialValue) => {
+export const saveProfile = (file, setStatus, setSubmitting, initialValue, setEditMode) => {
   return async (dispatch, getState) => {
     const userId = getState().auth.id;
     const initialValuesKeys = Object.keys(initialValue);
@@ -107,6 +107,7 @@ export const saveProfile = (file, setStatus, setSubmitting, initialValue) => {
     const data = await saveProfileAPI(file);
     if (data.resultCode === 0) {
       dispatch(getProfile(userId));
+      setEditMode(false);
     } else {
       const objectErrors = {
         contacts: {}
@@ -129,7 +130,6 @@ export const saveProfile = (file, setStatus, setSubmitting, initialValue) => {
       })
 
       setStatus(objectErrors);
-      return Promise.reject(objectErrors);
     }
     setSubmitting(false);
   }
