@@ -70,20 +70,28 @@ export const setSubscriptionsId = (userId, isFetching) => ({
 //ThunkCreators
 export const getUsers = (page, count) => {
   return async (dispatch) => {
-    const data = await getUsersAPI(page, count);
-    dispatch(setCurrentPage(page));
-    dispatch(setUsers(data.items));
-    dispatch(setTotalCount(data.totalCount));
+    try {
+      const data = await getUsersAPI(page, count);
+      dispatch(setCurrentPage(page));
+      dispatch(setUsers(data.items));
+      dispatch(setTotalCount(data.totalCount));
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 };
 
 const followUnfollowFlow = async (dispatch, id, apiMethod, actionCreator) => {
-  dispatch(setSubscriptionsId(id, true));
-  const data = await apiMethod(id);
-  if (data.resultCode === 0) {
-    dispatch(actionCreator(id));
+  try {
+    dispatch(setSubscriptionsId(id, true));
+    const data = await apiMethod(id);
+    if (data.resultCode === 0) {
+      dispatch(actionCreator(id));
+    }
+    dispatch(setSubscriptionsId(id, false));
+  } catch (error) {
+    console.log(error.message);
   }
-  dispatch(setSubscriptionsId(id, false));
 }
 export const follow = (id) => {
   return async (dispatch) => {

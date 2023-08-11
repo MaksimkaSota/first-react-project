@@ -24,7 +24,11 @@ export const setInitializedSuccess = () => ({type: INITIALIZED_SUCCESS});
 //ThunkCreators
 export const initialize = () => {
   return async (dispatch) => {
-    await dispatch(getAuthUserData());
-    dispatch(setInitializedSuccess());
+    try {
+      await dispatch(getAuthUserData());
+      dispatch(setInitializedSuccess());
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 };

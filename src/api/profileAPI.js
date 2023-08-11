@@ -11,8 +11,8 @@ export const getStatusAPI = async (userId) => {
 };
 
 export const updateStatusAPI = async (myStatus) => {
-  const response = await http.put(`profile/status`, {status: myStatus});
-  return await response.data;
+    const response = await http.put(`profile/status`, {status: myStatus});
+    return await response.data;
 };
 
 export const savePhotoAPI = async (photoFile) => {

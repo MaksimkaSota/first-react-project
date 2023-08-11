@@ -38,7 +38,7 @@ export const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto, 
             <ProfileDataFormContainer profile={profile} saveProfile={saveProfile} setEditMode={setEditMode} /> :
             <ProfileData profile={profile} isOwner={isOwner} onChangeEditMode={onChangeEditMode}/>
         }
-        <ProfileStatus status={status} updateStatus={updateStatus} />
+        <ProfileStatus status={status} updateStatus={updateStatus} isOwner={isOwner} />
         <Test />
       </div>
     </div>

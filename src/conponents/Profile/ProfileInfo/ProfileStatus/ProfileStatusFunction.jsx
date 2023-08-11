@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export const ProfileStatusFunction = ({status, updateStatus}) => {
+export const ProfileStatusFunction = ({status, updateStatus, isOwner}) => {
   const [editMode, setEditMode] = useState(false);
   const [localStatus, setLocalStatus] = useState(status);
 
@@ -9,7 +9,7 @@ export const ProfileStatusFunction = ({status, updateStatus}) => {
   }, [status]);
 
   const onActivateEditMode = () => {
-    setEditMode(true);
+    isOwner && setEditMode(true);
   };
 
   const onDeactivateEditMode = () => {

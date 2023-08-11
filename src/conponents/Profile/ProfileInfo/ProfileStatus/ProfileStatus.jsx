@@ -7,6 +7,7 @@ export class ProfileStatus extends React.Component {
   }
 
   onActivateEditMode = () => {
+    this.props.isOwner &&
     this.setState({
       editMode: true
     });

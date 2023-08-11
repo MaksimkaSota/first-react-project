@@ -10,6 +10,7 @@ export const Header = ({login, isAuth, logout}) => {
       <div className={classes.loginBlock}>
         {
           isAuth ?
+            // <div>{login} - <Navigate to={'/login'} onClick={logout}>Log out</Navigate></div> :
             <div>{login} - <button onClick={logout}>Log out</button></div> :
             <NavLink to={'/login'}>Login</NavLink>
         }

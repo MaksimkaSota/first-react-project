@@ -64,73 +64,92 @@ export const setStatus = (status) => ({type: SET_STATUS, payload: status});
 export const deletePost = (postId) => ({type: DELETE_POST, payload: postId});
 export const savePhotoSuccess = (photos) => ({type: SAVE_PHOTO_SUCCESS, payload: photos});
 
-
 //ThunkCreators
 export const getProfile = (userId) => {
   return async (dispatch) => {
-    const data = await getProfileAPI(userId);
-    dispatch(setProfile(data));
+    try {
+      const data = await getProfileAPI(userId);
+      dispatch(setProfile(data));
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 };
 
 export const getStatus = (userId) => {
   return async (dispatch) => {
-    const data = await getStatusAPI(userId);
-    dispatch(setStatus(data));
+    try {
+      const data = await getStatusAPI(userId);
+      dispatch(setStatus(data));
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 };
 
 export const updateStatus = (status) => {
   return async (dispatch) => {
-    const data = await updateStatusAPI(status);
-    if (data.resultCode === 0) {
-      dispatch(setStatus(status));
+    try {
+      const data = await updateStatusAPI(status);
+      if (data.resultCode === 0) {
+        dispatch(setStatus(status));
+      }
+    } catch (error) {
+      console.log(error.message);
     }
   }
 };
 
 export const savePhoto = (file) => {
   return async (dispatch) => {
-    const data = await savePhotoAPI(file);
-    if (data.resultCode === 0) {
-      dispatch(savePhotoSuccess(data.data.photos));
+    try {
+      const data = await savePhotoAPI(file);
+      if (data.resultCode === 0) {
+        dispatch(savePhotoSuccess(data.data.photos));
+      }
+    } catch (error) {
+      console.log(error.message);
     }
   }
 };
 
 export const saveProfile = (file, setStatus, setSubmitting, initialValue, setEditMode) => {
   return async (dispatch, getState) => {
-    const userId = getState().auth.id;
-    const initialValuesKeys = Object.keys(initialValue);
-    const contactsKeys = Object.keys(initialValue.contacts);
+    try {
+      const userId = getState().auth.id;
+      const initialValuesKeys = Object.keys(initialValue);
+      const contactsKeys = Object.keys(initialValue.contacts);
 
-    const data = await saveProfileAPI(file);
-    if (data.resultCode === 0) {
-      dispatch(getProfile(userId));
-      setEditMode(false);
-    } else {
-      const objectErrors = {
-        contacts: {}
-      };
+      const data = await saveProfileAPI(file);
+      if (data.resultCode === 0) {
+        dispatch(getProfile(userId));
+        setEditMode(false);
+      } else {
+        const objectErrors = {
+          contacts: {}
+        };
 
-      data.messages.forEach((message) => {
-        initialValuesKeys.forEach((value) => {
-          if (value === 'contacts') {
-            contactsKeys.forEach((contact) => {
-              if (message.toLowerCase().includes(contact.toLowerCase())) {
-                objectErrors.contacts[contact] = message;
+        data.messages.forEach((message) => {
+          initialValuesKeys.forEach((value) => {
+            if (value === 'contacts') {
+              contactsKeys.forEach((contact) => {
+                if (message.toLowerCase().includes(contact.toLowerCase())) {
+                  objectErrors.contacts[contact] = message;
+                }
+              })
+            } else {
+              if (message.toLowerCase().includes(value.toLowerCase())) {
+                objectErrors[value] = message;
               }
-            })
-          } else {
-            if (message.toLowerCase().includes(value.toLowerCase())) {
-              objectErrors[value] = message;
             }
-          }
+          })
         })
-      })
 
-      setStatus(objectErrors);
+        setStatus(objectErrors);
+      }
+      setSubmitting(false);
+    } catch (error) {
+      console.log(error.message);
     }
-    setSubmitting(false);
   }
 };

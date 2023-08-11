@@ -1,6 +1,6 @@
 import './App.css';
 import { Navbar } from './conponents/Navbar/Navbar';
-import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { News } from './conponents/News/News';
 import { Settings } from './conponents/Settings/Settings';
 import { Musics } from './conponents/Musics/Musics';
@@ -19,8 +19,13 @@ const DialogsContainer = React.lazy(() => import('./conponents/Dialogs/DialogsCo
 const Profile = React.lazy(() => import('./conponents/Profile/Profile'));
 
 const App = ({initialized, initialize}) => {
+  const catchAllUnhandledErrors = (promiseRejectionEvent) => {
+    console.log(promiseRejectionEvent.reason.message);
+  }
   useEffect(() => {
     initialize();
+    window.addEventListener('unhandledrejection', catchAllUnhandledErrors);
+    return () => window.removeEventListener('unhandledrejection', catchAllUnhandledErrors);
   }, []);
 
   if (!initialized) {
@@ -39,6 +44,7 @@ const App = ({initialized, initialize}) => {
           </div>
         }>
           <Routes>
+            <Route path="/" element={<Navigate to={'/profile'} />} />
             <Route path="/dialogs/*" element={<DialogsContainer />} />
             <Route path="/profile/:id?" element={<Profile />} />
             <Route path="/users" element={<UsersContainer />} />
@@ -46,6 +52,7 @@ const App = ({initialized, initialize}) => {
             <Route path="/news" element={<News />} />
             <Route path="/musics" element={<Musics />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="*" element={<div>404</div>} />
           </Routes>
         </Suspense>
       </div>
@@ -63,10 +70,12 @@ const AppContainer = connect(mapStateToProps, mapDispatchToProps)(App);
 export const MainApp = () => {
   return (
     <Provider store={store}>
-      <HashRouter basename='/'>
+      {/*for deploy in gh-pages*/}
+      {/*<HashRouter basename='/'>*/}
+      <BrowserRouter>
         <AppContainer />
-      </HashRouter>
+      </BrowserRouter>
+      {/*</HashRouter>*/}
     </Provider>
   )
 }
-export default connect(mapStateToProps, mapDispatchToProps)(App);

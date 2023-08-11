@@ -43,43 +43,59 @@ export const resetAuthUserData = () => ({type: RESET_AUTH_USER_DATA});
 //ThunkCreators
 export const getAuthUserData = () => {
   return async (dispatch) => {
-    const data = await getAuthAPI();
-    if (data.resultCode === 0) {
-      dispatch(setAuthUserData(data.data));
+    try {
+      const data = await getAuthAPI();
+      if (data.resultCode === 0) {
+        dispatch(setAuthUserData(data.data));
+      }
+      return data;
+    } catch (error) {
+      console.log(error.message);
     }
-    return data;
   }
 };
 
 export const login = (email, password, rememberMe, captcha, setStatus, setSubmitting) => {
   return async (dispatch) => {
-    const data = await loginAPI(email, password, rememberMe, captcha);
-    if (data.resultCode === 0) {
-      dispatch(getAuthUserData());
-    } else {
-      if (data.resultCode === 10) {
-        dispatch(getCaptchaURL());
+    try {
+      const data = await loginAPI(email, password, rememberMe, captcha);
+      if (data.resultCode === 0) {
+        dispatch(getAuthUserData());
+      } else {
+        if (data.resultCode === 10) {
+          dispatch(getCaptchaURL());
+        }
+        let message = data.messages.length > 0 ? data.messages[0] : 'Some error';
+        setStatus(message);
       }
-      let message = data.messages.length > 0 ? data.messages[0] : 'Some error';
-      setStatus(message);
+      setSubmitting(false);
+    } catch (error) {
+      console.log(error.message);
     }
-    setSubmitting(false);
   }
 };
 
 export const getCaptchaURL = () => {
   return async (dispatch) => {
-    const data = await getCaptchaUrlAPI();
-    const captchaUrl = data.url;
-    dispatch(getCaptchaUrlSuccess(captchaUrl));
+    try {
+      const data = await getCaptchaUrlAPI();
+      const captchaUrl = data.url;
+      dispatch(getCaptchaUrlSuccess(captchaUrl));
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 };
 
 export const logout = () => {
   return async (dispatch) => {
-    const data = await logoutAPI();
-    if (data.resultCode === 0) {
-      dispatch(resetAuthUserData());
+    try {
+      const data = await logoutAPI();
+      if (data.resultCode === 0) {
+        dispatch(resetAuthUserData());
+      }
+    } catch (error) {
+      console.log(error.message);
     }
   }
 };
