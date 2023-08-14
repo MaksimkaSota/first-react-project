@@ -7,11 +7,13 @@ import { Musics } from './conponents/Musics/Musics';
 import { UsersContainer } from './conponents/Users/UsersContainer';
 import { HeaderContainer } from './conponents/Header/HeaderContainer';
 import { LoginContainer } from './conponents/Login/LoginContainer';
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { connect, Provider } from 'react-redux';
 import { initialize } from './redux/app-reduser';
 import { Preloader } from './conponents/common/Preloader/Preloader';
 import { store } from './redux/redux-store';
+import { MainError } from './conponents/ErrorComponents/MainError/MainError';
+import { ErrorCatcher } from './conponents/ErrorComponents/ErrorCatcher/ErrorCatcher';
 
 // import DialogsContainer from './conponents/Dialogs/DialogsContainer';
 // import Profile from './conponents/Profile/Profile';
@@ -68,14 +70,24 @@ const mapDispatchToProps = {initialize}
 const AppContainer = connect(mapStateToProps, mapDispatchToProps)(App);
 
 export const MainApp = () => {
-  return (
-    <Provider store={store}>
-      {/*for deploy in gh-pages*/}
-      {/*<HashRouter basename='/'>*/}
-      <BrowserRouter>
-        <AppContainer />
-      </BrowserRouter>
-      {/*</HashRouter>*/}
-    </Provider>
-  )
+  const [appCrash, setAppCrash] = useState(false);
+
+  let content = null;
+  if (appCrash) {
+    content = <MainError />
+  } else {
+    content = (
+      <ErrorCatcher setAppCrash={setAppCrash}>
+        <Provider store={store}>
+          {/*for deploy in gh-pages*/}
+          {/*<HashRouter basename='/'>*/}
+          <BrowserRouter>
+            <AppContainer />
+          </BrowserRouter>
+          {/*</HashRouter>*/}
+        </Provider>
+      </ErrorCatcher>
+    )
+  }
+  return content;
 }

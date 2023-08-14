@@ -89,14 +89,14 @@ export const getStatus = (userId) => {
 
 export const updateStatus = (status) => {
   return async (dispatch) => {
-    try {
+    // try {
       const data = await updateStatusAPI(status);
       if (data.resultCode === 0) {
         dispatch(setStatus(status));
       }
-    } catch (error) {
-      console.log(error.message);
-    }
+    // } catch (error) {
+    //   console.log(error.message);
+    // }
   }
 };
 

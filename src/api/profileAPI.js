@@ -11,7 +11,7 @@ export const getStatusAPI = async (userId) => {
 };
 
 export const updateStatusAPI = async (myStatus) => {
-    const response = await http.put(`profile/status`, {status: myStatus});
+    const response = await http.put(`profile/status111`, {status: myStatus});
     return await response.data;
 };
 
