@@ -11,7 +11,9 @@ export const getStatusAPI = async (userId) => {
 };
 
 export const updateStatusAPI = async (myStatus) => {
-    const response = await http.put(`profile/status111`, {status: myStatus});
+  // for test Global or Profile Error
+  // const response = await http.put(`profile/status111`, {status: myStatus});
+    const response = await http.put(`profile/status`, {status: myStatus});
     return await response.data;
 };
 

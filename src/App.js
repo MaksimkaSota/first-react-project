@@ -12,28 +12,22 @@ import { connect, Provider } from 'react-redux';
 import { initialize } from './redux/app-reduser';
 import { Preloader } from './conponents/common/Preloader/Preloader';
 import { store } from './redux/redux-store';
-import { MainError } from './conponents/ErrorComponents/MainError/MainError';
+import { GlobalError } from './conponents/ErrorComponents/GlobalError/GlobalError';
 import { ErrorCatcher } from './conponents/ErrorComponents/ErrorCatcher/ErrorCatcher';
 
 // import DialogsContainer from './conponents/Dialogs/DialogsContainer';
-// import Profile from './conponents/Profile/Profile';
+// import ProfileContainer from './conponents/Profile/ProfileContainer';
 const DialogsContainer = React.lazy(() => import('./conponents/Dialogs/DialogsContainer'));
-const Profile = React.lazy(() => import('./conponents/Profile/Profile'));
+const ProfileContainer = React.lazy(() => import('./conponents/Profile/ProfileContainer'));
 
 const App = ({initialized, initialize}) => {
-  const catchAllUnhandledErrors = (promiseRejectionEvent) => {
-    console.log(promiseRejectionEvent.reason.message);
-  }
   useEffect(() => {
     initialize();
-    window.addEventListener('unhandledrejection', catchAllUnhandledErrors);
-    return () => window.removeEventListener('unhandledrejection', catchAllUnhandledErrors);
   }, []);
 
   if (!initialized) {
     return <Preloader />
   }
-
   return (
     <div className="app-wrapper">
       <HeaderContainer />
@@ -48,7 +42,7 @@ const App = ({initialized, initialize}) => {
           <Routes>
             <Route path="/" element={<Navigate to={'/profile'} />} />
             <Route path="/dialogs/*" element={<DialogsContainer />} />
-            <Route path="/profile/:id?" element={<Profile />} />
+            <Route path="/profile/:id?" element={<ProfileContainer />} />
             <Route path="/users" element={<UsersContainer />} />
             <Route path="/login" element={<LoginContainer />} />
             <Route path="/news" element={<News />} />
@@ -63,31 +57,37 @@ const App = ({initialized, initialize}) => {
 }
 
 const mapStateToProps = (state) => ({
-  initialized: state.app.initialized,
+  initialized: state.app.initialized
 });
-const mapDispatchToProps = {initialize}
+const mapDispatchToProps = {initialize};
 
 const AppContainer = connect(mapStateToProps, mapDispatchToProps)(App);
 
 export const MainApp = () => {
   const [appCrash, setAppCrash] = useState(false);
 
-  let content = null;
-  if (appCrash) {
-    content = <MainError />
-  } else {
-    content = (
-      <ErrorCatcher setAppCrash={setAppCrash}>
-        <Provider store={store}>
-          {/*for deploy in gh-pages*/}
-          {/*<HashRouter basename='/'>*/}
-          <BrowserRouter>
-            <AppContainer />
-          </BrowserRouter>
-          {/*</HashRouter>*/}
-        </Provider>
-      </ErrorCatcher>
-    )
+  const catchAllUnhandledErrors = (promiseRejectionEvent) => {
+    setAppCrash(true);
+    console.log(promiseRejectionEvent.reason.message);
   }
-  return content;
+  useEffect(() => {
+    window.addEventListener('unhandledrejection', catchAllUnhandledErrors);
+    return () => window.removeEventListener('unhandledrejection', catchAllUnhandledErrors);
+  }, []);
+
+  if (appCrash) {
+    return <GlobalError />
+  }
+  return (
+    <ErrorCatcher setAppCrash={setAppCrash}>
+      <Provider store={store}>
+        {/*for deploy in gh-pages*/}
+        {/*<HashRouter basename='/'>*/}
+        <BrowserRouter>
+          <AppContainer />
+        </BrowserRouter>
+        {/*</HashRouter>*/}
+      </Provider>
+    </ErrorCatcher>
+  )
 }

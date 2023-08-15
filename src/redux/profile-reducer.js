@@ -5,6 +5,7 @@ const SET_PROFILE = 'first-react-project/profile/SET-PROFILE';
 const SET_STATUS = 'first-react-project/profile/SET-STATUS';
 const DELETE_POST = 'first-react-project/profile/DELETE-POST';
 const SAVE_PHOTO_SUCCESS = 'first-react-project/profile/SAVE-PHOTO-SUCCESS';
+const SET_ERROR = 'first-react-project/profile/SET-ERROR';
 
 const initialState = {
   posts: [
@@ -14,7 +15,11 @@ const initialState = {
     {id: 4, message: 'Dada', numberOfLike: 20},
   ],
   profile: null,
-  status: ''
+  status: '',
+  error: {
+    isError: false,
+    message: ''
+  }
 };
 
 export const profileReducer = (state = initialState, action) => {
@@ -52,6 +57,14 @@ export const profileReducer = (state = initialState, action) => {
           photos: action.payload
         }
       };
+    case SET_ERROR:
+      return {
+        ...state,
+        error: {
+          isError: action.payload.isError,
+          message: action.payload.message,
+        }
+      };
     default:
       return state;
   }
@@ -63,6 +76,7 @@ export const setProfile = (profile) => ({type: SET_PROFILE, payload: profile});
 export const setStatus = (status) => ({type: SET_STATUS, payload: status});
 export const deletePost = (postId) => ({type: DELETE_POST, payload: postId});
 export const savePhotoSuccess = (photos) => ({type: SAVE_PHOTO_SUCCESS, payload: photos});
+export const setError = (isError, message) => ({type: SET_ERROR, payload: {isError, message}});
 
 //ThunkCreators
 export const getProfile = (userId) => {
@@ -71,6 +85,7 @@ export const getProfile = (userId) => {
       const data = await getProfileAPI(userId);
       dispatch(setProfile(data));
     } catch (error) {
+      dispatch(setError(true, error.message));
       console.log(error.message);
     }
   }
@@ -82,6 +97,7 @@ export const getStatus = (userId) => {
       const data = await getStatusAPI(userId);
       dispatch(setStatus(data));
     } catch (error) {
+      dispatch(setError(true, error.message));
       console.log(error.message);
     }
   }
@@ -89,14 +105,15 @@ export const getStatus = (userId) => {
 
 export const updateStatus = (status) => {
   return async (dispatch) => {
-    // try {
+    try {
       const data = await updateStatusAPI(status);
       if (data.resultCode === 0) {
         dispatch(setStatus(status));
       }
-    // } catch (error) {
-    //   console.log(error.message);
-    // }
+    } catch (error) {
+      dispatch(setError(true, error.message));
+      console.log(error.message);
+    }
   }
 };
 
@@ -108,6 +125,7 @@ export const savePhoto = (file) => {
         dispatch(savePhotoSuccess(data.data.photos));
       }
     } catch (error) {
+      dispatch(setError(true, error.message));
       console.log(error.message);
     }
   }
@@ -149,6 +167,7 @@ export const saveProfile = (file, setStatus, setSubmitting, initialValue, setEdi
       }
       setSubmitting(false);
     } catch (error) {
+      dispatch(setError(true, error.message));
       console.log(error.message);
     }
   }

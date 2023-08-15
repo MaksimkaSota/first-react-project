@@ -1,6 +1,6 @@
 import { getAuthUserData } from './auth-reduser';
 
-const INITIALIZED_SUCCESS = 'first-react-project/app/INITIALIZED_SUCCESS';
+const INITIALIZED_SUCCESS = 'first-react-project/app/INITIALIZED-SUCCESS';
 
 const initialState = {
   initialized: false,
