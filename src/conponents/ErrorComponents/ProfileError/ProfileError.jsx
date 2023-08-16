@@ -10,7 +10,6 @@ export const ProfileError = ({error, setError, content}) => {
       setError(false, '');
     }
   };
-
   if (error.isError) {
     return (
       <div className={classes.errorContainer} onClick={onClickErrorContainer}>
