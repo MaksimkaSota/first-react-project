@@ -1,5 +1,6 @@
 import { ProfileInfoContainer } from './ProfileInfo/ProfileInfoContainer';
-import { MyPostsContainer } from './MyPosts/MyPostsContainer';
+// import { MyPostsContainer } from './MyPosts/MyPostsContainer';
+import { MyPosts } from './MyPosts/MyPosts';
 
 export const Profile = () => {
   // for test Error Boundary
@@ -8,7 +9,8 @@ export const Profile = () => {
   return (
     <div>
       <ProfileInfoContainer />
-      <MyPostsContainer />
+      <MyPosts />
+      {/*<MyPostsContainer />*/}
     </div>
   );
 };
